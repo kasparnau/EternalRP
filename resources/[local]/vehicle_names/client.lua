@@ -1,0 +1,17 @@
+Citizen.CreateThread(function()
+  AddTextEntry('BUGATTI', 'Bugatti Veyron')
+  AddTextEntry('DIVO', 'Bugatti Divo')
+  AddTextEntry('LP700R', 'Lamborghini Aventador LP700R')
+  AddTextEntry('AMGGTC', 'AMG GTC')
+	AddTextEntry('GTR','Nissan GTR')
+
+  --//POLICE
+  AddTextEntry('POLCHAR', 'Police Charger')
+  AddTextEntry('POLVIC', 'Police Crown Victoria')
+  AddTextEntry('POLVIC2', 'Police Crown Victoria 2')
+  AddTextEntry('POLRAPTOR', 'Police Raptor')
+  AddTextEntry('POLTAH', 'Police Tahoe')
+  AddTextEntry('POLTAURUS', 'Police Taurus')
+  AddTextEntry('Mustang', 'Police Mustang')
+  AddTextEntry('UCBUFFALO', 'Buffalo')
+end)

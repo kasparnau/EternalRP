@@ -1,0 +1,13 @@
+Citizen.CreateThread(function()
+	while true do
+		SetDiscordAppId(897880577921941504)
+		SetDiscordRichPresenceAsset('eternal_logo')
+        SetDiscordRichPresenceAssetText('Eternal RP')
+        SetDiscordRichPresenceAssetSmall('eternal_logo')
+        SetDiscordRichPresenceAssetSmallText('This is a lsmall icon with text')
+        SetDiscordRichPresenceAction(0, "Koduleht", "https://eternalrp.me/")
+        SetDiscordRichPresenceAction(1, "Discord", "https://discord.io/eternalinvite")
+
+		Citizen.Wait(60000)
+	end
+end)

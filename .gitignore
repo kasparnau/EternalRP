@@ -1,0 +1,10 @@
+/cache/
+/db/
+node_modules/
+/resources/\[local\]/\[vehicles\]/
+/resources/\[local\]/jp_clothes/
+/resources/\[local\]/assets_peds/
+/resources/\[local\]/\[weapons\]/
+
+/resources/\[local\]/bills_old/
+/resources/\[local\]/bank_old/

@@ -1,0 +1,20 @@
+{
+  "vehicles": [
+    "na6",
+    "a80",
+    "fk8",
+    "audirs6tk",
+    "evo9",
+    "skyline",
+    "r8ppi",
+    "69charger",
+    "c7",
+    "66fastback",
+    "911turbos",
+    "acs8",
+    "r1"
+  ],
+  "peds": ["addonpedname1", "addonpedname2"],
+  "weapons": ["addonweaponname1", "addonweaponname2", "AMMO_CASH"],
+  "weapon_components": ["weapon_component_name_1", "weapon_component_name_2"]
+}

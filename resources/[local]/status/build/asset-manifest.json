@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/build/static/css/main.1eddc9e8.chunk.css",
+    "main.js": "/build/static/js/main.8314d30d.chunk.js",
+    "main.js.map": "/build/static/js/main.8314d30d.chunk.js.map",
+    "runtime-main.js": "/build/static/js/runtime-main.9b0b87e5.js",
+    "runtime-main.js.map": "/build/static/js/runtime-main.9b0b87e5.js.map",
+    "static/css/2.c79263d0.chunk.css": "/build/static/css/2.c79263d0.chunk.css",
+    "static/js/2.ff17f726.chunk.js": "/build/static/js/2.ff17f726.chunk.js",
+    "static/js/2.ff17f726.chunk.js.map": "/build/static/js/2.ff17f726.chunk.js.map",
+    "static/js/3.e62da929.chunk.js": "/build/static/js/3.e62da929.chunk.js",
+    "static/js/3.e62da929.chunk.js.map": "/build/static/js/3.e62da929.chunk.js.map",
+    "index.html": "/build/index.html",
+    "static/css/2.c79263d0.chunk.css.map": "/build/static/css/2.c79263d0.chunk.css.map",
+    "static/css/main.1eddc9e8.chunk.css.map": "/build/static/css/main.1eddc9e8.chunk.css.map",
+    "static/js/2.ff17f726.chunk.js.LICENSE.txt": "/build/static/js/2.ff17f726.chunk.js.LICENSE.txt",
+    "static/media/400.css": "/build/static/media/roboto-vietnamese-400-normal.52cebac0.woff2"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.9b0b87e5.js",
+    "static/css/2.c79263d0.chunk.css",
+    "static/js/2.ff17f726.chunk.js",
+    "static/css/main.1eddc9e8.chunk.css",
+    "static/js/main.8314d30d.chunk.js"
+  ]
+}
