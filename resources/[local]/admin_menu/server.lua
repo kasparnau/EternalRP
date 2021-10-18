@@ -451,17 +451,9 @@ local ForbiddenEvents = {
     "esx_society:putVehicleDFWMInGarage"
 }
 
-local alreadyBanned = {}
-
 for i,event in pairs (ForbiddenEvents) do
     RegisterNetEvent(event)
     AddEventHandler(event, function()
-        if alreadyBanned[source] ~= nil then return end
-        alreadyBanned[source] = true
         exports['admin']:banPlayerFromSource(source, "Automaatne Ban - Cheating", "System", 7776000, "Forbidden event: "..event)
-        CreateThread(function()
-            Wait(1000)
-            alreadyBanned[source] = false
-        end)
     end)
 end

@@ -1,12 +1,9 @@
 local hidden = {}
-local showPlayerBlips = false
-local ignorePlayerNameDistance = false
 local disPlayerNames = 50
 local playerSource = 0
 
-
-function DrawText3D(x,y,z, text, textColor) -- some useful function, use it if you want!
-    local color = { r = 255, g = 255, b = 255, alpha = 255 } -- Color of the text 
+function DrawText3D(x,y,z, text, textColor)
+    local color = { r = 255, g = 255, b = 255, alpha = 255 }
     if textColor ~= nil then 
         color = {r = textColor[1] or 255, g = textColor[2] or 255, b = textColor[3] or 255, alpha = textColor[4] or 255}
     end
@@ -35,8 +32,8 @@ function DrawText3D(x,y,z, text, textColor) -- some useful function, use it if y
     end
 end
 
-function DrawText3DTalking(x,y,z, text, textColor) -- some useful function, use it if you want!
-    local color = { r = 220, g = 220, b = 220, alpha = 255 } -- Color of the text 
+function DrawText3DTalking(x,y,z, text, textColor)
+    local color = { r = 220, g = 220, b = 220, alpha = 255 }
     if textColor ~= nil then 
         color = {r = textColor[1] or 22, g = textColor[2] or 55, b = textColor[3] or 155, alpha = textColor[4] or 255}
     end
@@ -64,6 +61,36 @@ function DrawText3DTalking(x,y,z, text, textColor) -- some useful function, use 
         DrawText(_x,_y)
     end
 end
+
+function DoesPlayerExist(pServerId)
+    local playerId = GetPlayerFromServerId(tonumber(pServerId))
+
+    return playerId ~= -1
+end
+
+RegisterNetEvent("player_list:hidePlayer")
+AddEventHandler("player_list:hidePlayer", function(player, toggle)
+    if type(player) == "table" then
+        for k,v in pairs(player) do
+            if DoesPlayerExist(k) then
+                local id = GetPlayerFromServerId(k)
+                hidden[id] = k
+            end
+        end
+        return
+    end
+
+    if DoesPlayerExist(player) then
+        local id = GetPlayerFromServerId(player)
+        if toggle == true then
+            hidden[id] = player
+        else
+            for k,v in pairs(hidden) do
+                if v == player then hidden[k] = nil end
+            end
+        end
+    end
+end)
 
 local ShowPlayers = false
 AddEventHandler('jp-binds:keyEvent', function(name,onDown)

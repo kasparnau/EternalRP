@@ -212,3 +212,13 @@ RPC.register("spawnVehicle", function(source, model)
 
     return exports['jp-garages']:spawnVehiclePersistent(model, coords)
 end)
+
+RPC.register("setWeather", function(source, weather)
+    return exports['jp-weather']:forceWeather(weather)
+end)
+
+RPC.register("noclip", function(source, enable)
+    TriggerClientEvent("player_list:hidePlayer", -1, source, enable)
+
+    return true
+end)

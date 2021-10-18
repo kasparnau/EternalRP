@@ -261,6 +261,12 @@ function doProgressBarManualRemove(duration, cb, extras)
     end)
 end
 
+function getItemData(itemId)
+    local result = itemsList[itemId] and itemsList[itemId] or false
+    if result and result.isWeapon then result.nonStackable = true end
+    return result
+end
+exports('getItemData', getItemData)
 
 function notyFail()
     TriggerEvent("DoLongHudText", "Sa ei saa seda praegu kasutada!", 'red')
@@ -387,6 +393,17 @@ function UseItem(data)
                 end
             end)
 
+            SendNUIMessage({
+                action = 'itemUsed',
+                alerts = {
+                    {
+                        item = {label = getItemData(item.itemId).label, itemId = getItemIdFromHash(lastEquippedWeapon)},
+                        qty = 1,
+                        message = 'PANID ÄRA',
+                    },
+                }
+            })
+
             exports['progress']:Progress({
                 name = "EquipItem",
                 duration = 1100,
@@ -403,11 +420,22 @@ function UseItem(data)
             local animLength = GetAnimDuration(dict, anim) * 1000
             Citizen.Wait(animLength - 2200)
 
-            lastEquippedThrowable = nil
+            lastEquippedWeapon = nil
             SetCurrentPedWeapon(playerPed, `WEAPON_UNARMED`, 1)
             RemoveAllPedWeapons(playerPed)
             ClearPedTasks(playerPed)
         else
+            SendNUIMessage({
+                action = 'itemUsed',
+                alerts = {
+                    {
+                        item = {label = getItemData(item.itemId).label, itemId = item.itemId},
+                        qty = 1,
+                        message = 'VÕTSID VÄLJA',
+                    },
+                }
+            })
+
             exports['progress']:Progress({
                 name = "EquipItem",
                 duration = 1500,
@@ -425,8 +453,8 @@ function UseItem(data)
 
             TaskPlayAnim(playerPed, dict, anim, 1.0, 1.0, -1, 50, 0, 0, 0, 0)
             Citizen.Wait(1500)
+            lastEquippedWeapon = weaponHash
             if (isThrowableWeapon(weaponHash)) then
-                lastEquippedThrowable = weaponHash
                 GiveWeaponToPed(playerPed, weaponHash, 1, 0, 1)
             else
                 GiveWeaponToPed(playerPed, weaponHash, getWeaponAmmo(getAmmoTypeHash(weaponHash)), 0, 1)
@@ -1405,7 +1433,7 @@ end)
 --* KEYBINDS
 
 RegisterCommand('-openInventory', function() end, false)
-exports['jp-keybinds']:registerKeyMapping("openInventory", "Mängija", "Ava Inventory", "+openInventory", "-openInventory", "I")
+exports['jp-keybinds']:registerKeyMapping("openInventory", "Inventory", "Ava Inventory", "+openInventory", "-openInventory", "I")
 
 RegisterCommand('+openHotbar', function()
     if not canViewInventory() then return end
@@ -1413,7 +1441,7 @@ RegisterCommand('+openHotbar', function()
 end, false)
 
 RegisterCommand('-openHotbar', function() end, false)
-exports['jp-keybinds']:registerKeyMapping("openHotbar", "Mängija", "Näita Tegevusriba", "+openHotbar", "-openHotbar", "TAB")
+exports['jp-keybinds']:registerKeyMapping("openHotbar", "Inventory", "Näita Asjaderiba", "+openHotbar", "-openHotbar", "TAB")
 
 --* EXPORTS
 

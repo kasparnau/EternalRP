@@ -24,15 +24,35 @@ CreateThread(function() -- TIME
     end
 end)
 
+local currentlyForced = false
+local lastForceId = 0
+
 CreateThread(function()
     while true do
-        currWeather = currWeather + 1
-        if currWeather > #weatherCycle then currWeather = 1 end
+        if not currentlyForced then
+            currWeather = currWeather + 1
+            if currWeather > #weatherCycle then currWeather = 1 end
 
-        weather = weatherCycle[currWeather]
+            weather = weatherCycle[currWeather]
 
-        TriggerClientEvent("jp-weather:sync:weather", -1, weather)
-
+            TriggerClientEvent("jp-weather:sync:weather", -1, weather)
+        end
         Wait(120*1000*2)
     end
 end)
+
+function forceWeather(pWeather)
+    currentlyForced = true
+    lastForceId = lastForceId + 1
+    local currForceId = lastForceId
+    weather = pWeather
+    TriggerClientEvent("jp-weather:sync:weather:instant", -1, weather)
+    CreateThread(function()
+        Wait(1000*60*10)
+        if currForceId == lastForceId then
+            currentlyForced = false
+        end
+    end)
+end
+
+exports('forceWeather', forceWeather)

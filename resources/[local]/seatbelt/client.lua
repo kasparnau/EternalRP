@@ -68,13 +68,13 @@ end)
 
 RegisterCommand('+seatbeltToggle', function()
 	if IsPedInAnyVehicle(PlayerPedId()) then
-		local action = beltOn and "Unbuckling" or 'Buckling'
+		local action = beltOn and "Võtad Turvavööd Lahti" or 'Kinnitad Turvavööd'
 		local actionTime = beltOn and 300 or 600
 
 		exports['progress']:Progress({
 			name = "Seatbelt",
 			duration = actionTime,
-			label = (action..' Seatbelt'),
+			label = (action),
 			useWhileDead = false,
 			canCancel = true,
 			controlDisables = {disableMovement = false,disableCarMovement = false,disableMouse = false,disableCombat = true},
@@ -89,4 +89,4 @@ RegisterCommand('+seatbeltToggle', function()
 	end
 end, false)
 RegisterCommand('-seatbeltToggle', function()end, false)
-exports['jp-keybinds']:registerKeyMapping("seatbeltToggle", "Vehicle", "Toggle Seatbelt", "+seatbeltToggle", "-seatbeltToggle", "B")    
+exports['jp-keybinds']:registerKeyMapping("seatbeltToggle", "Sõidukid", "Turvavöö", "+seatbeltToggle", "-seatbeltToggle", "B")    

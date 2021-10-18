@@ -51,19 +51,15 @@ Citizen.CreateThread( function()
 		local ped = PlayerPedId()
 		if IsPedShooting(ped) then
             local hash = GetSelectedPedWeapon(ped)
-            local id = getItemIdFromHash(hash)
-            print (`WEAPON_BRICK`.." | "..hash.." | "..tostring(id))
-            -- if not id or not exports['inventory']:hasEnoughOfItem(id, 1) then
-            --     TriggerEvent("DoLongHudText", "Sa tulistasid relvaga mida sa ei oma!!!! >:( automaatne ban peale kui poleks vMenu XD", "red", 5000)
-            --     -- TriggerServerEvent("admin:banMyAss", ("Fired not owned weapon: %s (%s)"):format(hash, id), 5259492)
-            --     -- return
-            -- end
 
-            if (lastEquippedThrowable) then
-                exports['inventory']:removeItem(getItemIdFromHash(lastEquippedThrowable), 1)
+            if not lastEquippedWeapon or not exports['inventory']:hasEnoughOfItem(getItemIdFromHash(lastEquippedWeapon), 1) then
+                TriggerEvent("DoLongHudText", "Sa tulistasid relvaga mida sa ei oma!!!! >:( automaatne ban peale kui poleks vMenu XD", "red", 5000)
+                -- TriggerServerEvent("admin:banMyAss", ("Fired not owned weapon: %s (%s)"):format(hash, id), 5259492)
+                -- return
+            end
 
-            -- if (isThrowableWeapon(hash) and getItemIdFromHash(hash)) then
-            --     exports['inventory']:removeItem(getItemIdFromHash(hash), 1)
+            if (lastEquippedWeapon and isThrowableWeapon(lastEquippedWeapon)) then
+                exports['inventory']:removeItem(getItemIdFromHash(lastEquippedWeapon), 1)
             else
                 local ammoType = Citizen.InvokeNative(0x7FEAD38B326B9F74, ped, hash)
                 newammo = GetPedAmmoByType(ped, ammoType)

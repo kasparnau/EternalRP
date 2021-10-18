@@ -6,9 +6,23 @@ function showUi(admin_level)
 
     SendNUIMessage({
         show = true,
-        admin_level = admin_level
+        admin_level = admin_level,
     })
 end
+
+CreateThread(function()
+    Wait(1000)
+
+    local list = exports['inventory']:getItemList()
+    local itemList = {}
+    for i,v in pairs (list) do
+        table.insert(itemList, i)
+    end
+
+    SendNUIMessage({
+        setItemList = itemList
+    })
+end)
 
 function hideUi()
     enabled = false
@@ -134,6 +148,7 @@ RegisterNUICallback('nuiAction', function(data, cb)
         if (DoesEntityExist(vehicle)) then
             exports['keys']:addKeys(vehicle)
         end
+        cb(true)
     elseif (action == 'fixVehicle') then
         local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
         if (DoesEntityExist(vehicle)) then
@@ -141,10 +156,54 @@ RegisterNUICallback('nuiAction', function(data, cb)
             SetVehicleDeformationFixed(vehicle)
             SetVehicleUndriveable(vehicle, false)
         end
+        cb(true)
     elseif (action == 'deleteVehicle') then
         local vehicle = GetVehiclePedIsIn(PlayerPedId(), false)
         if (DoesEntityExist(vehicle)) then
             Sync.DeleteVehicle(vehicle)
+        end
+        cb(true)
+    elseif (action == 'setWeather') then
+        local success = RPC.execute("setWeather", content.weather)
+        cb(success)
+    elseif (action == 'reviveNearest') then
+        local closestPlayer, closestPlayerDistance = exports['modules']:getModule("Game").GetClosestPlayer()
+		local targetPed = GetPlayerPed(closestPlayer)
+		if closestPlayer ~= -1 and closestPlayerDistance < 3.0 then
+			local trgPlayer = Player(GetPlayerServerId(closestPlayer))
+			if trgPlayer.state.isDead then
+				TriggerServerEvent("death:reviveSomeone", GetPlayerServerId(closestPlayer))
+			end
+		end
+        cb(true)
+    elseif (action == 'teleportToMarker') then        
+        local WaypointHandle = GetFirstBlipInfoId(8)
+
+        if DoesBlipExist(WaypointHandle) then
+            local waypointCoords = GetBlipInfoIdCoord(WaypointHandle)
+
+            for height = 1, 1000 do
+                SetPedCoordsKeepVehicle(PlayerPedId(), waypointCoords["x"], waypointCoords["y"], height + 0.0)
+
+                local foundGround, zPos = GetGroundZFor_3dCoord(waypointCoords["x"], waypointCoords["y"], height + 0.0)
+
+                if foundGround then
+                    SetPedCoordsKeepVehicle(PlayerPedId(), waypointCoords["x"], waypointCoords["y"], height + 0.0)
+
+                    break
+                end
+
+                Citizen.Wait(5)
+            end
+        end
+    elseif (action == 'teleportToCoords') then
+        SetEntityCoords(PlayerPedId(), tonumber(content.x) + 0.0, tonumber(content.y) + 0.0, tonumber(content.z) + 0.0, true, false, false, false)
+    elseif (action == 'noclip') then
+        local enabled = exports['execution-noclip']:isEnabled()
+        local success = RPC.execute("noclip", not enabled)
+        if success then
+            exports['execution-noclip']:toggle()
+            hideUi()
         end
     end
 end)

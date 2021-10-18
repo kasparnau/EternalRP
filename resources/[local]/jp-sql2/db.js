@@ -43,8 +43,8 @@ class DB {
   };
 
   async connect() {
-    await this.handleDisconnect(); //INIT
     await new Promise((r) => setTimeout(r, 2000));
+    await this.handleDisconnect(); //INIT
     this._initializedResolver();
   }
 }

@@ -41,12 +41,27 @@ function forceUpdateWeatherTime()
 end
 
 RegisterNetEvent("jp-weather:sync:weather")
-AddEventHandler("jp-weather:sync:weather", function(newWeather)
+AddEventHandler("jp-weather:sync:weather", function(nWeather)
     if not enabled then return end
 
-    newWeather = newWeather
+    newWeather = nWeather
     
     updateWeather()
+end)
+
+RegisterNetEvent("jp-weather:sync:weather:instant")
+AddEventHandler("jp-weather:sync:weather:instant", function(nWeather)
+    if not enabled then return end
+
+    newWeather = nWeather
+    
+    if not enabled then return end
+
+    ClearOverrideWeather()
+    ClearWeatherTypePersist()
+    SetWeatherTypeNow(newWeather)
+    SetWeatherTypeNowPersist(newWeather)
+    SetWeatherTypePersist(newWeather)
 end)
 
 RegisterNetEvent("jp-weather:sync:time")
