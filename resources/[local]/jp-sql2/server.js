@@ -10,6 +10,8 @@ async function db(string, data, cb) {
     if (cb) {
       cb(results);
     }
+
+    return results;
   } catch (e) {
     console.error(e);
     console.error("\n" + string + " | " + data);
@@ -17,12 +19,18 @@ async function db(string, data, cb) {
     if (cb) {
       cb();
     }
+
+    return undefined;
   }
 }
 
 exports("execute", async (string, data, cb) => {
   db(string, data, cb);
 });
+
+// exports("executeSync", async (string, data) => {
+//   return await db(string, data);
+// });
 
 // const DB = require("./db");
 // const { performance } = require("perf_hooks");

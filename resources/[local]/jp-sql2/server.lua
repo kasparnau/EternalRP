@@ -22,4 +22,4 @@ function executeSync(str, data)
 end
 
 exports('executeSync', executeSync)
-exports('execute', db)
+-- exports('execute', db)
