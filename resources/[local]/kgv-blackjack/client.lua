@@ -902,7 +902,7 @@ AddEventHandler("BLACKJACK:RequestBets", function(index, _timeLeft)
 					end
 					return
 				else
-					DisplayHelpText("You don't have enough casino chips for the bet.", 5000)
+					TriggerEvent("DoLongHudText", "Sul pole piisavalt Žetoone!", "red", 5000)
 				end
 			end
 		end
@@ -1005,7 +1005,8 @@ AddEventHandler("kgv-blackjack:move", function(move)
 			NetworkAddPedToSynchronisedScene(PlayerPedId(), scene, "anim_casino_b@amb@casino@games@shared@player@", idleVar, 2.0, -2.0, 13, 16, 1148846080, 0)
 			NetworkStartSynchronisedScene(scene)
 		else
-			DisplayHelpText("You don't have enough money to double down.", 5000)
+			exports['jp-menu']:showContextMenu(prevMenu, "Blackjack")
+			TriggerEvent("DoLongHudText", "Sul pole piisavalt zetoone et kahekordistada panus!", "red", 5000)
 		end
 	elseif move == "split" then
 		if leavingBlackjack == true then leaveBlackjack() return end
@@ -1051,11 +1052,13 @@ AddEventHandler("kgv-blackjack:move", function(move)
 			NetworkAddPedToSynchronisedScene(PlayerPedId(), scene, "anim_casino_b@amb@casino@games@shared@player@", idleVar, 2.0, -2.0, 13, 16, 1148846080, 0)
 			NetworkStartSynchronisedScene(scene)
 		else
-			DisplayHelpText("You don't have enough money to split.", 5000)
+			exports['jp-menu']:showContextMenu(prevMenu, "Blackjack")
+			TriggerEvent("DoLongHudText", "Sul pole piisavalt zetoone et splittida!", "red", 5000)
 		end
 	end
 end)
 
+local prevMenu = nil
 RegisterNetEvent("BLACKJACK:RequestMove")
 AddEventHandler("BLACKJACK:RequestMove", function(_timeLeft)
 	Citizen.CreateThread(function()
@@ -1086,14 +1089,14 @@ AddEventHandler("BLACKJACK:RequestMove", function(_timeLeft)
 
 		MenuData[#MenuData+1] = {
 			title = "Hit",
-			desc = "Draw another card",
+			desc = "Võta uus kaart",
 			event = "kgv-blackjack:move",
 			params = "hit"
 		}
 
 		MenuData[#MenuData+1] = {
 			title = "Stand",
-			desc = "Don't draw another card",
+			desc = "Ära võta uut kaarti",
 			event = "kgv-blackjack:move",
 			params = "stand"
 		}
@@ -1101,7 +1104,7 @@ AddEventHandler("BLACKJACK:RequestMove", function(_timeLeft)
 		if #hand < 3 and #splitHand == 0 then
 			MenuData[#MenuData+1] = {
 				title = "Double Down",
-				desc = "Double your bet and draw a new card",
+				desc = "Kahekordista oma panus ja võta uus kaart",
 				event = "kgv-blackjack:move",
 				params = "double"
 			}
@@ -1110,13 +1113,14 @@ AddEventHandler("BLACKJACK:RequestMove", function(_timeLeft)
 		if CanSplitHand(hand) == true then
 			MenuData[#MenuData+1] = {
 				title = "Split",
-				desc = "Split your bet",
+				desc = "Spliti oma panus",
 				event = "kgv-blackjack:move",
 				params = "split"
 			}
 		end
 
 		waitingForMove = true
+		prevMenu = MenuData
 		exports['jp-menu']:showContextMenu(MenuData, "Blackjack")
 	end)
 end)
@@ -1131,11 +1135,11 @@ AddEventHandler("BLACKJACK:GameEndReaction", function(result)
 		end
 		
 		if #hand == 2 and handValue(hand) == 21 and result == "good" then
-			DisplayHelpText("You have Blackjack!", 5000)
+			DisplayHelpText("Sul on blackjack!", 5000)
 		elseif handValue(hand) > 21 and result ~= "good" then
-			DisplayHelpText("You went bust.", 5000)
+			DisplayHelpText("Sa bustisid.", 5000)
 		else
-			DisplayHelpText("You "..resultNames[result].." with "..handValue(hand)..".", 5000)
+			DisplayHelpText("Sa "..resultNames[result].." kaartidega "..handValue(hand)..".", 5000)
 		end
 		
 		hand = {}

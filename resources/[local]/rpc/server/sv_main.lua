@@ -58,8 +58,3 @@ AddEventHandler("rpc:request", function(resource, name, callID, params)
 
     TriggerClientEvent("rpc:response", source, resource, callID, response)
 end)
-
-RPC.register("getSomething", function()
-    print "here"
-    return "yeah boy", "pede"
-end)

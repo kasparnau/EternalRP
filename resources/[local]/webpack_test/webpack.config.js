@@ -12,4 +12,5 @@ module.exports = {
       rotateStringArray: true,
     }),
   ],
+  watch: true,
 };

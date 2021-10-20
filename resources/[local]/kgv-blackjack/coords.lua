@@ -8,20 +8,38 @@ end
 
 tables = {
 	{
-		coords = vector4(1148.837, 269.747, -52.8409, -134.69),
+		coords = vector4(1043.424, 56.79709, 68.06007, 193),
 		highStakes = false
 	},
 	{
-		coords = vector4(1151.84, 266.747, -52.8409, 45.31),
+		coords = vector4(1044.392, 52.66409, 68.06007, 13),
 		highStakes = false
 	},
 	{
-		coords = vector4(1129.406, 262.3578, -52.041, 135.31),
-		highStakes = true
+		coords = vector4(1023.02, 60.77129, 68.86001, 103),
+		highStakes = true,
+		color = 3,
 	},
 	{
-		coords = vector4(1144.429, 247.3352, -52.041, 135.31),
-		highStakes = true
+		coords = vector4(1027.855, 40.08385, 68.86001, 103),
+		highStakes = true,
+		color = 3,
+	},
+	{
+		coords = vector4(1035.85, 55.02458, 68.06007, 193),
+		highStakes = false
+	},
+	{
+		coords = vector4(1036.813, 50.90566, 68.06007, 13),
+		highStakes = false
+	},
+	{
+		coords = vector4(1028.989, 62.16921, 68.86008, 283),
+		highStakes = false
+	},
+	{
+		coords = vector4(1033.818, 41.51279, 68.86008, 283),
+		highStakes = false
 	},
 }
 
@@ -34,21 +52,21 @@ tables = {
 --]]
 
 customTables = {
-    {
-        coords = vector4(152.11915588379,-981.68530273438,29.091926574707,292.24224853516),
-		highStakes = false,
-		color = 0,
-    },
-    {
-        coords = vector4(150.28746032715,-976.88409423828,29.091924667358,286.94821166992),
-		highStakes = true,
-		color = 3,
-    },
-    {
-		coords = vector4(967.33, 32.0191, 115.1742, -122.0),
-		highStakes = true,
-		color = 1,
-    },
+    -- {
+    --     coords = vector4(152.11915588379,-981.68530273438,29.091926574707,292.24224853516),
+	-- 	highStakes = false,
+	-- 	color = 0,
+    -- },
+    -- {
+    --     coords = vector4(150.28746032715,-976.88409423828,29.091924667358,286.94821166992),
+	-- 	highStakes = true,
+	-- 	color = 3,
+    -- },
+    -- {
+	-- 	coords = vector4(967.33, 32.0191, 115.1742, -122.0),
+	-- 	highStakes = true,
+	-- 	color = 1,
+    -- },
 }
 
 for i,v in pairs(customTables) do
@@ -56,9 +74,9 @@ for i,v in pairs(customTables) do
 end
 
 resultNames = {
-	["good"] = "won",
-	["bad"] = "lost",
-	["impartial"] = "got a push",
+	["good"] = "võitsid",
+	["bad"] = "kaotasid",
+	["impartial"] = "said viigi",
 }
 
 requestCardAnims = {
