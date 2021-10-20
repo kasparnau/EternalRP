@@ -197,3 +197,8 @@ itemsList = {
     --// ADMIN
     ['holy-water'] = {label = "Püha Vesi", description = "+100 Hunger, +100 Thirst :)", weight = 0.69}
 }
+
+function getPhones()
+    return {'phone', 'apple-iphone', 'nokia-phone', 'pixel-2-phone', 'samsung-s8'}
+end
+exports("getPhones", getPhones)

@@ -8,7 +8,7 @@ addAction({'hamburger', 'sandwich', 'donut', 'hot-dog', 'pizza'}, function(item,
         if status.hunger >= 100 then status.hunger = 100 end
 
         exports['status']:set(status)
-    end, {lbl = ("TARBID  "..item.label), anim = {animDict = 'mp_player_inteat@burger', anim = 'mp_player_int_eat_burger', flags = 49}})
+    end, {lbl = ("SÖÖD:  "..item.label), anim = {animDict = 'mp_player_inteat@burger', anim = 'mp_player_int_eat_burger', flags = 49}})
 end, function(item, data)
     local status = exports['status']:get()
     return status.hunger < 100
@@ -22,7 +22,7 @@ addAction({'coffee', 'cola', 'water', 'sprunk', 'milk'}, function(item, data)
         if status.thirst >= 100 then status.thirst = 100 end
 
         exports['status']:set(status)
-    end, {lbl = ("JOOD "..item.label), anim = {animDict = 'amb@world_human_drinking@beer@female@idle_a', anim = 'idle_e', flags = 49}})
+    end, {lbl = ("JOOD: "..item.label), anim = {animDict = 'amb@world_human_drinking@beer@female@idle_a', anim = 'idle_e', flags = 49}})
 end, function(item, data)
     local status = exports['status']:get()
     return status.thirst < 100
@@ -36,7 +36,7 @@ addAction({'holy-water'}, function(item, data)
         status.hunger = 100
 
         exports['status']:set(status)
-    end, {lbl = ("JOOD "..item.label)})
+    end, {lbl = ("JOOD: "..item.label)})
 end, function(item, data)
     local status = exports['status']:get()
     return status.thirst < 100 or status.hunger < 100
@@ -53,7 +53,7 @@ addAction({'prison-food'}, function(item, data)
         if status.hunger >= 100 then status.hunger = 100 end
 
         exports['status']:set(status)
-    end, {lbl = ("TARBID "..item.label)})
+    end, {lbl = ("SÖÖD: "..item.label)})
 end, function(item, data)
     local status = exports['status']:get()
     return status.thirst < 100 or status.hunger < 100
@@ -112,7 +112,7 @@ addAction({'bandage'}, function(item, data)
                 Citizen.Wait(1000)
             end
         end)
-    end, {lbl = ("Paneb sidemet haavale"), anim = {animDict = "amb@world_human_clipboard@male@idle_a", anim = "idle_c", flags = 49}})
+    end, {lbl = ("Paned sidemet haavale"), anim = {animDict = "amb@world_human_clipboard@male@idle_a", anim = "idle_c", flags = 49}})
 end)
 
 addAction({'ifak'}, function(item, data)

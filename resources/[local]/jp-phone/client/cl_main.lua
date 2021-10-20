@@ -1,11 +1,6 @@
-local enabled = false
+enabled = false
 
---//CALL STUFF
-local callNoti
-local callerId
-local inCall = false
-
-local phones = {'phone', 'apple-iphone', 'nokia-phone', 'pixel-2-phone', 'samsung-s8'}
+local phones = exports['inventory']:getPhones()
 function hasPhone()
     for i,v in pairs (phones) do
         if exports['inventory']:hasEnoughOfItem(v, 1) then
@@ -139,118 +134,13 @@ RegisterNUICallback('nuiAction', function(data, cb)
         local success = RPC.execute("addTweet", content.text)
 
         cb(success)
-    elseif (action == "callPlayer") then
-        callerId = ''
-        if content.name then
-            callerId = (("%s (%s)"):format(content.name, content.number))
-        else
-            callerId = content.number
-        end
-        callNoti = addNoti(callerId, "Helistab...", {no = true}, 2)
-
-        RPC.execute("callPlayer", content.number, content.name)
-
-        cb(success)
     elseif (action == "notiButton") then
-        if content.id == callNoti then --// HANDLE CALLS
-            if not inCall then
-                SendNUIMessage({
-                    playRingtone = false
-                })
-                local channel = RPC.execute("answerCall", content.value)
-                if content.value == 'no' then
-                    removeNoti(callNoti)
-                    callNoti = nil
-                elseif content.value == 'yes' then
-                    exports['pma-voice']:setCallChannel(channel)
-                    inCall = true
-                    PhonePlayCall()
-                    updateNoti(callNoti, callerId, "Kõne", {no = true}, 2)
-                    startCallTimer()
-                end
-            else
-                RPC.execute("stopCall")
-            end
-            cb(true)
-        else
-            TriggerEvent("jp-phone:notiAction", content.id, content.value == 'yes' and true or false)
-            cb(true)
-        end
+        TriggerEvent("jp-phone:notiAction", content.id, content.value == 'yes' and true or false)
+        cb(true)
     elseif (action == "sendPing") then
         local success = RPC.execute("sendPing", content.target)
         cb(success)
     end
-end)
-
-function startCallTimer()
-    CreateThread(function()
-        local minutes = 0
-        local seconds = 0
-        while true do
-            if not inCall then return end
-            
-            seconds = seconds + 1
-            if seconds >= 60 then
-                minutes = minutes + 1
-                seconds = 0
-            end
-            local minStr, secStr
-            secStr = seconds < 10 and ("0"..seconds) or seconds
-            minStr = minutes < 10 and ("0"..minutes) or minutes
-            updateNoti(callNoti, ("Kõne (%s:%s)"):format(minStr, secStr), callerId, {no = true}, 2)
-
-            Wait(1000)
-        end
-    end)
-end
-
-exports("isInCall", function()
-    return inCall
-end)
-
-RegisterNetEvent("jp-phone:callRequest")
-AddEventHandler("jp-phone:callRequest", function(from_number)
-    local contacts = RPC.execute("getContacts")
-    callerId = from_number
-    for i,v in pairs (contacts) do
-        if (tonumber(v.number) == tonumber(from_number)) then
-            callerId = (("%s (%s)"):format(v.name, from_number))
-        end
-    end
-    callNoti = addNoti(callerId, "Sissetulev Kõne", {yes = true, no = true}, 2)
-    SendNUIMessage({
-        playRingtone = true
-    })
-end)
-
-RegisterNetEvent("jp-phone:callRequest:answer", function(answered, channel)
-    if answered then
-        exports['pma-voice']:setCallChannel(channel)
-        inCall = true
-        PhonePlayCall()
-        updateNoti(callNoti, callerId, "Kõne", { no = true }, 2)
-        startCallTimer()
-    else
-        removeNoti(callNoti)
-        callNoti = nil
-    end
-end)
-
-RegisterNetEvent("jp-phone:calls:stop")
-AddEventHandler("jp-phone:calls:stop", function()
-    inCall = false
-    removeNoti(callNoti)
-
-    if not enabled then
-        PhonePlayOut()
-    else
-        PhonePlayText()
-    end
-
-    --// INCASE STILL CALLING
-    SendNUIMessage({
-        playRingtone = false
-    })
 end)
 
 AddEventHandler("jp-weather:timeUpdated", function(hours, minutes)

@@ -506,7 +506,7 @@ local function playerConnect(name, setKickReason, deferrals)
     local sanName = string.gsub(plrName, "[^A-Za-z0-9 ]","")
 
     if plrName ~= sanName then
-        done("Your name can only contain numbers, letters and spaces!")
+        done("Sinu nimi võib sisaldada ainult numbreid, tähti ja tühikuid!")
         CancelEvent()
         return
     end
@@ -595,7 +595,7 @@ local function playerConnect(name, setKickReason, deferrals)
     end
     
     local prioData = Queue:IsPriority(ids)
-    local priorityText = type(prioData) == "number" and (" | Priority: "..prioData) or " | No Priority"
+    local priorityText = type(prioData) == "number" and (" | Prioriteet: "..prioData) or " | Pole Prioriteeti"
 
     update((string_format(Config.Language.pos .. "00:00:00", pos, Queue:GetSize(), "")..priorityText))
 

@@ -644,3 +644,21 @@ end)
 -- 		print ("Flags: "..json.encode(flags))
 --     end
 -- end)
+
+function GetTargetDoorId(pEntity)
+    local activeDoors = DoorSystemGetActive()
+
+    for _, activeDoor in pairs(activeDoors) do
+        if activeDoor[2] == pEntity then
+            return activeDoor[1]
+        end
+    end
+end
+
+RegisterCommand("idk", function()
+	local entity = exports['jp-target']:GetEntityPlayerIsLookingAt(10.0, 2.0, 16)
+
+	print ("Entity!")
+	print(entity, GetEntityType(entity), GetEntityCoords(entity), GetEntityModel(entity), GetEntityCoords(entity))
+	print ("Door ID: "..json.encode(GetTargetDoorId(entity)))
+end)

@@ -151,7 +151,6 @@ RPC.register("callPlayer", function(source, number, name)
 end)
 
 RPC.register("answerCall", function(source, answer)
-    local answer = answer == 'yes'
     local call, ind = getPlayerCall(tonumber(source))
     if not call then return end
 

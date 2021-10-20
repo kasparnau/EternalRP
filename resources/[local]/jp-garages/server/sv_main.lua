@@ -66,7 +66,7 @@ RPC.register("jp-garages:getPersonalVehicles", function(source)
     local query = [[
         SELECT *
         FROM vehicles
-        WHERE cid=?
+        WHERE cid=? AND faction=0
     ]]
 
     local queryData = {char.cid}

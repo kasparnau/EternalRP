@@ -83,7 +83,7 @@ function makeVehicleMenuList(vehicles)
         local localizedName = GetLabelText(vehicleName)
         local tit = "Võta sõiduk välja"
 
-        local status = v.inGarage == 2 and "Garaažis" or v.inGarage == 1 and "Väljas" or v.inGarage == 3 and "Arestitud" or v.inGarage == 4 and "Hävitatud" or "Unknown"
+        local status = v.inGarage == 2 and "Sees" or v.inGarage == 1 and "Väljas" or v.inGarage == 3 and "Arestitud" or v.inGarage == 4 and "Hävitatud" or "Unknown"
         
         if v.inGarage == 4 then
             tit = ("Võta Sõiduk välja ($%s)"):format(1000)

@@ -1,4 +1,4 @@
-local Promises, CallIdentifier = {}, 0
+local Resource, Promises, CallIdentifier = GetCurrentResourceName(), {}, 0
 
 RPC = {}
 
@@ -34,6 +34,16 @@ function UnPacker(params, index)
     end
 end
 
+function TriggerNetEvent(pEvent, ...)
+    local payload = msgpack.pack({...})
+
+    if payload:len() < 5000 then
+        TriggerServerEventInternal(pEvent, payload, payload:len())
+    else
+        TriggerLatentServerEventInternal(pEvent, payload, payload:len(), 128000)
+    end
+end
+
 ------------------------------------------------------------------
 --                  (Trigger Server Calls)
 ------------------------------------------------------------------
@@ -44,7 +54,7 @@ function RPC.execute(name, ...)
 
     Promises[callID] = promise:new()
 
-    TriggerServerEvent("rpc:request", name, callID, ParamPacker(...))
+    TriggerServerEvent("rpc:request", Resource, name, callID, ParamPacker(...))
 
     Citizen.SetTimeout(20000, function()
         if not solved then
@@ -63,8 +73,8 @@ function RPC.execute(name, ...)
 end
 
 RegisterNetEvent("rpc:response")
-AddEventHandler("rpc:response", function(callID, ...)
-    if Promises[callID] then
+AddEventHandler("rpc:response", function(origin, callID, ...)
+    if Resource == origin and Promises[callID] then
         Promises[callID]:resolve(...)
     end
 end)

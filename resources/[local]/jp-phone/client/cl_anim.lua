@@ -37,6 +37,7 @@ local ANIMS = {
 		}}}
 
 function newPhoneProp()
+    SetCurrentPedWeapon(PlayerPedId(), `WEAPON_UNARMED`)
 	deletePhone()
 	RequestModel(phoneModel)
 	while not HasModelLoaded(phoneModel) do

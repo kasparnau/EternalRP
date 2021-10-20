@@ -222,3 +222,11 @@ RPC.register("noclip", function(source, enable)
 
     return true
 end)
+
+RPC.register("setTime", function(source, hours)
+    hours = tonumber(hours)
+
+    exports['jp-weather']:forceTime(hours)
+
+    return true
+end)

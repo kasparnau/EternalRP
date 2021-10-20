@@ -166,6 +166,9 @@ RegisterNUICallback('nuiAction', function(data, cb)
     elseif (action == 'setWeather') then
         local success = RPC.execute("setWeather", content.weather)
         cb(success)
+    elseif (action == 'setTime') then
+        local success = RPC.execute("setTime", content.hours)
+        cb(success)
     elseif (action == 'reviveNearest') then
         local closestPlayer, closestPlayerDistance = exports['modules']:getModule("Game").GetClosestPlayer()
 		local targetPed = GetPlayerPed(closestPlayer)
@@ -205,5 +208,6 @@ RegisterNUICallback('nuiAction', function(data, cb)
             exports['execution-noclip']:toggle()
             hideUi()
         end
+
     end
 end)

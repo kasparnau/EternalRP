@@ -29,6 +29,10 @@ exports("GetClientVar", function(name, data)
     return ClientVars[name] or false
 end)
 
+exports("getCharacter", function()
+    return ClientVars['character'] or false
+end)
+
 RegisterNetEvent("players:networkCharacterVar")
 AddEventHandler("players:networkCharacterVar", function(value, data)
     assert(value, "Missing args!")

@@ -7,4 +7,5 @@ server_scripts {
 
 client_scripts {
     'client/cl_*.lua',
+    'client/cl_*.js'
 }

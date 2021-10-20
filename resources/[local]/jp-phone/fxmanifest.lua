@@ -15,8 +15,8 @@ server_scripts {
 client_scripts {
     'client/cl_main.lua',
     'client/cl_anim.lua',
-    
-    'client/cl_ping.lua'
+    'client/cl_calls.lua',
+    'client/cl_ping.lua',
 }
 
 ui_page 'build/index.html'

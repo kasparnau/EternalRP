@@ -56,3 +56,15 @@ function forceWeather(pWeather)
 end
 
 exports('forceWeather', forceWeather)
+
+function forceTime(nHours)
+    if (nHours >= 24) or (nHours < 0) then
+        nHours = 0
+    end
+    hours = nHours
+
+    TriggerClientEvent("jp-weather:sync:time", -1, {hours = nHours, mins = 0})
+    return true
+end
+
+exports('forceTime', forceTime)

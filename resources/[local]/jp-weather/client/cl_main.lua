@@ -65,10 +65,10 @@ AddEventHandler("jp-weather:sync:weather:instant", function(nWeather)
 end)
 
 RegisterNetEvent("jp-weather:sync:time")
-AddEventHandler("jp-weather:sync:time", function(time)
+AddEventHandler("jp-weather:sync:time", function(nTime)
     if not enabled then return end
 
-    time = time
+    time = nTime
     
     updateTime()
 end)

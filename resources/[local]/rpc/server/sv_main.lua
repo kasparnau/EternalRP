@@ -37,7 +37,7 @@ function UnPacker(params, index)
 end
 
 RegisterNetEvent("rpc:request")
-AddEventHandler("rpc:request", function(name, callID, params)
+AddEventHandler("rpc:request", function(resource, name, callID, params)
     local response
     local source = source
 
@@ -56,5 +56,10 @@ AddEventHandler("rpc:request", function(name, callID, params)
         response = {}
     end
 
-    TriggerClientEvent("rpc:response", source, callID, response)
+    TriggerClientEvent("rpc:response", source, resource, callID, response)
+end)
+
+RPC.register("getSomething", function()
+    print "here"
+    return "yeah boy", "pede"
 end)

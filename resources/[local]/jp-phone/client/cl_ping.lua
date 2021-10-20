@@ -1,6 +1,5 @@
 RegisterNetEvent("jp-phone:pingRequest")
 AddEventHandler("jp-phone:pingRequest", function(from)
-    print ("Pingis: "..from)
     local pingNoti = addNoti("PING (30)", "Keegi tahab teada sinu asukohta.", { no = true, yes = true})
     local eventHandler
     eventHandler = AddEventHandler("jp-phone:notiAction", function(id, accept)

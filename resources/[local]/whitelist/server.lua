@@ -17,11 +17,11 @@ Queue.OnReady(function()
                 local success, err = pcall(function()
                     local banEnd = Date.new(banData.date + banData.length + 10800) --* 7200 = 3 HOURS FOR GMT +3
                     local banString = banEnd:Format("%B, %d %Y "..banEnd:ToTimeString())
-                    allow("Sa oled keelustatud mu serverist :). \nhttps://eternalrp.me, Ban ID: "..banData.id.."\nExpiration: "..banString.." (GMT +3)\nReason: "..banData.reason.."\nBanned by: "..banData.banner)    
+                    allow("Sa oled keelustatud mu serverist :). \nhttps://eternalrp.me, Ban ID: "..banData.id.."\nLõppeb: "..banString.." (GMT +3)\nPõhjus: "..banData.reason.."\nSind Bannis: "..banData.banner)    
                     return
                 end)
                 if not success then
-                    allow("Had a problem checking for bans: "..tostring(err))
+                    allow("Probleem bannide checkimisega wtf: "..tostring(err))
                     return
                 end
             else
@@ -51,7 +51,7 @@ Queue.OnReady(function()
                 return
             end
         else
-            allow("You do not have steam open. Please open/restart steam and restart FiveM, join again.")
+            allow("Sul pole Steam lahti! Palun ava/restarti Steam ja ava FiveM uuesti kui Steam on lahti!")
             return
         end
     end)
