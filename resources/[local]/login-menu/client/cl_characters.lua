@@ -106,6 +106,7 @@ function CreatePlayerCharacterPeds(characters)
                     goto skip_ped
                 end
                 -- SetEntityAlpha(newPed,204,false)
+                SetEntityAlpha(newPed, 204, false)
                 SetEntityHeading(newPed, pedSpawnLoc[_].w)
                 LoadPed(newPed, json.decode(char.outfit), modelHash, char.gender)
                 TaskLookAtCoord(newPed, vector3(1771.68,-1659.61,113.03),-1, 0, 2)
@@ -116,7 +117,8 @@ function CreatePlayerCharacterPeds(characters)
                 table.insert(currentPedChoices, {
                     ped = newPed,
                     char = char,
-                    pos = _
+                    pos = _,
+                    alpha = 204
                 })
 
                 ::skip_ped::
@@ -128,6 +130,41 @@ function CreatePlayerCharacterPeds(characters)
         SendNUIMessage({
             firstTime = true
         })
+    else
+        CreateThread(function()
+            local loginCam = exports['spawn_manager']:GetLoginCam()
+
+            while enabled do        
+                if (#characters > 0) then
+                    local hit, endCoords, surface, entity = screenToWorld(8, PlayerPedId(), GetCamCoord(loginCam))
+                    local found
+
+                    if (hit and entity and entity ~= 0) then
+                        for _,v in pairs (currentPedChoices) do
+                            if (v.ped == entity) then
+                                found = v
+                                break
+                            end
+                        end
+                    end
+                    
+                    for i,v in pairs (currentPedChoices) do
+                        if (found and v.ped == found.ped) or (currentPed and v.ped == currentPed) then
+                            if v.alpha ~= 255 then
+                                v.alpha = 255
+                                SetEntityAlpha(v.ped, 255, false)    
+                            end
+                        else
+                            if (v.alpha ~= 204) and (not currentPed or currentPed ~= v.ped) then
+                                v.alpha = 204
+                                SetEntityAlpha(v.ped, 204, false)    
+                            end
+                        end
+                    end
+                end
+                Wait(0)
+            end
+        end)
     end
 end
 

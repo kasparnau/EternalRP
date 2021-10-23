@@ -7,7 +7,7 @@ local p = nil
 
 function showUi()
     enabled = true
-    SetNuiFocus(true, true)
+    SetNuiFocus(true, false)
     SendNUIMessage({
         type = 'show'
     })

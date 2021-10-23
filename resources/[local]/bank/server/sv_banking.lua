@@ -29,8 +29,6 @@ function getPlayerBank(cid)
         myBank.account_id = bank.insertId
     end
     
-    print (json.encode(myBank))
-
     return myBank
 end
 

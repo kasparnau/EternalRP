@@ -1,10 +1,14 @@
 local enabled = false
 
 function showUi()
+    local character = exports['players']:GetClientVar('character')
+    if not character then return end
+
     enabled = true
     SetNuiFocus(true, true)
     SendNUIMessage({
-        show = true
+        show = true,
+        character = character
     })
 end
 
@@ -124,4 +128,10 @@ RegisterNUICallback('nuiAction', function(data, cb)
             hideUi()
         end
     end
+end)
+
+AddEventHandler("login:firstSpawn", function()
+    SendNUIMessage({
+        resetData = true
+    })
 end)

@@ -12,7 +12,7 @@ local time = {
 }
 
 function updateWeather()
-    if newWeather ~= currWeather then
+    if newWeather ~= currWeather and enabled then
         ClearOverrideWeather()
         ClearWeatherTypePersist()
         SetWeatherTypeOvertimePersist(newWeather, 120.0)
@@ -27,6 +27,8 @@ function updateTime()
 end
 
 function forceUpdateWeatherTime()
+    if not enabled then return end
+    
     local data = RPC.execute("getWeatherTime")
     newWeather = data.weather
     time = data.time
@@ -54,8 +56,6 @@ AddEventHandler("jp-weather:sync:weather:instant", function(nWeather)
     if not enabled then return end
 
     newWeather = nWeather
-    
-    if not enabled then return end
 
     ClearOverrideWeather()
     ClearWeatherTypePersist()

@@ -60,7 +60,7 @@ end)
 
 RegisterNetEvent("jp-phone:callRequest")
 AddEventHandler("jp-phone:callRequest", function(from_number)
-    local contacts = RPC.execute("getContacts")
+    local contacts = cachedContacts
     callerId = from_number
     for i,v in pairs (contacts) do
         if (tonumber(v.number) == tonumber(from_number)) then

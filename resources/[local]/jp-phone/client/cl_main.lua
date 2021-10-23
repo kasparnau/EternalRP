@@ -1,4 +1,5 @@
 enabled = false
+cachedContacts = {}
 
 local phones = exports['inventory']:getPhones()
 function hasPhone()
@@ -109,12 +110,13 @@ RegisterNUICallback('nuiAction', function(data, cb)
     elseif (action == 'fetchContactsPage') then
         local page = {}
         page.contacts = RPC.execute("getContacts")
-
         cb(page)
+    elseif action == 'updateContactsCache' then
+        cachedContacts = content.contacts
     elseif (action == 'addContact') then
-        local success = RPC.execute("addContact", content)
+        local addedContactId = RPC.execute("addContact", content)
 
-        cb(success)
+        cb(addedContactId)
     elseif (action == 'removeContact') then
         local success = RPC.execute("removeContact", content.id)
 
@@ -170,5 +172,12 @@ AddEventHandler("login:firstSpawn", function()
     Wait(1000) --// wait for inv to update
     SendNUIMessage({
         hasPhone = hasPhone()
+    })
+end)
+
+AddEventHandler("login:firstSpawn", function()
+    cachedContacts = {}
+    SendNUIMessage({
+        resetData = true
     })
 end)

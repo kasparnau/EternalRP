@@ -179,6 +179,7 @@ RPC.register('login:selectCharacter', function(source, citizen_id)
     if (result[1]) then
         print ("^5[Login]^7 | PID: "..data.pid.." | License: "..data.license.." | Selected Character: "..result[1].cid)
         exports['players']:setPlayerCurrentCharacter(source, result[1])
+        SetPlayerRoutingBucket(source, 0)
 
         TriggerEvent("login:server:selectedCharacter", source, result[1])
         
@@ -188,4 +189,9 @@ RPC.register('login:selectCharacter', function(source, citizen_id)
     end
 
     return true
+end)
+
+RPC.register("inMenu", function(source)
+    exports['players']:setPlayerCurrentCharacter(source, nil)
+    -- SetPlayerRoutingBucket(source, 1)
 end)

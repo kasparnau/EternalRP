@@ -14,7 +14,7 @@ RPC.register("addContact", function(source, data)
 
     local result = sql:executeSync(query, queryData)
 
-    return result
+    return result.insertId
 end)
 
 RPC.register("getContacts", function(source)

@@ -1,6 +1,6 @@
-local enabled = false
-local currentChar = nil
-
+enabled = false
+currentChar = nil
+currentPed = nil
 function showUi()
     enabled = true
     SetNuiFocus(true, true)
@@ -28,6 +28,8 @@ function openMenu()
     exports['players']:SetClientVar("beingEscorted", false)
     exports['players']:SetClientVar("character", nil)
 
+    RPC.execute('inMenu')
+
     showUi()
 
     Citizen.CreateThread(function()
@@ -44,6 +46,7 @@ end
 function closeMenu()
     hideUi()
 
+    ClearSpawnedPeds()
     EnableAllControlActions(0)
     TaskSetBlockingOfNonTemporaryEvents(PlayerPedId(), false)
     SetNuiFocus(false, false)
@@ -94,6 +97,7 @@ RegisterNUICallback('nuiAction', function(data, cb)
 
         if found then
             currentChar = found.char
+            currentPed = found.ped
             SendNUIMessage({
                 setCurrent = found.char
             })

@@ -18,6 +18,13 @@ end)
 
 function setGoodWeather()
     exports['jp-weather']:toggle(false)
+
+    ClearOverrideWeather()
+    ClearWeatherTypePersist()
+    SetWeatherTypePersist('EXTRASUNNY')
+    SetWeatherTypeNow('EXTRASUNNY')
+    SetWeatherTypeNowPersist('EXTRASUNNY')
+    NetworkOverrideClockTime(18, 0, 0)
 end
 
 function doInitialize()
