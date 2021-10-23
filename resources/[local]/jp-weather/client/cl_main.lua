@@ -93,7 +93,7 @@ function toggle(enable)
 end
 
 CreateThread(function()
-    if exports['players']:GetClientVar("character") then
+    if NetworkIsSessionStarted() then
         forceUpdateWeatherTime()
     end
 end)

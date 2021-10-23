@@ -10,7 +10,7 @@ const ClearPromise = (callID) => {
   }, 5000);
 };
 
-const ParamPacker = (...params) => {
+const Packer = (...params) => {
   let pack = {};
   for (let i = 0; i < 15; i++) {
     pack[i] = { param: params[i] };
@@ -18,21 +18,12 @@ const ParamPacker = (...params) => {
   return pack;
 };
 
-const ParamUnpacker = (params, index) => {
-  let ret = [];
+const UnPacker = (params) => {
+  let shit = [];
   for (let i = 0; i < params.length; i++) {
-    if (params[i]?.param) {
-      ret.push(params[i]?.param);
-    }
+    shit.push(params[i].param);
   }
-  return ret;
-};
-
-const UnPacker = (params, index) => {
-  let idx = index || 0;
-  if (idx <= 15) {
-    return [params[idx], UnPacker(params, idx + 1)];
-  }
+  return shit;
 };
 
 RPC.execute = async (name, ...args) => {
@@ -46,7 +37,7 @@ RPC.execute = async (name, ...args) => {
   });
   Promises[callID] = { prom: prom, resolve: resolve, reject: reject };
 
-  TriggerServerEvent("rpc:request", Resource, name, callID, ParamPacker(args));
+  TriggerServerEvent("rpc:request", Resource, name, callID, Packer(args));
   setTimeout(() => {
     if (!solved) {
       Promises[callID].resolve({ nil });
@@ -54,12 +45,13 @@ RPC.execute = async (name, ...args) => {
     }
   }, 20000);
   let response = await Promises[callID].prom;
-
+  console.log(`here: ${JSON.stringify(response)}`);
   solved = true;
 
   ClearPromise(callID);
 
-  return ParamUnpacker(response);
+  console.log(JSON.stringify(UnPacker(response)));
+  return UnPacker(response);
 };
 
 RegisterNetEvent("rpc:response");
@@ -68,3 +60,8 @@ onNet("rpc:response", (origin, callID, ...args) => {
     Promises[callID].resolve(...args);
   }
 });
+
+setTimeout(async () => {
+  let [resp, k, ko] = await RPC.execute("yess");
+  console.log(`${resp} | ${k} | ${ko}`);
+}, 500);

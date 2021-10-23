@@ -9,43 +9,39 @@ RPC.remove = (name) => {
   Functions[name] = undefined;
 };
 
-const ParamPacker = (params) => {
-  let pack = {};
+const Packer = (params) => {
+  let pack = [];
   for (let i = 0; i < 15; i++) {
     pack[i] = { param: params[i] };
   }
   return pack;
 };
 
-const ParamUnpacker = (params, index) => {
-  let idx = index || 0;
-  if (idx <= params.length) {
-    return [params[idx]["param"], ParamUnpacker(params, idx + 1)];
+const UnPacker = (params) => {
+  let shit = [];
+  for (let i = 0; i < params.length; i++) {
+    shit.push(params[i].param);
   }
-};
-
-const UnPacker = (params, index) => {
-  let idx = index || 0;
-  if (idx <= 15) {
-    return [params[idx], UnPacker(params, idx + 1)];
-  }
+  return shit;
 };
 
 RegisterNetEvent("rpc:request");
 onNet("rpc:request", (resource, name, callID, params) => {
   let response;
   if (Functions[name] === undefined) return;
-
   try {
-    response = ParamPacker(Functions[name](source, ParamUnpacker(params)));
+    response = Packer(Functions[name](source, UnPacker(params)));
   } catch {
     console.log("Error: " + error);
     return;
   }
-
   if (response === undefined) {
     response = {};
   }
+  console.log("returning response: " + JSON.stringify(response));
+  emitNet("rpc:response", source, resource, callID, response);
+});
 
-  emitNet("rpc:response", resource, source, callID, response);
+RPC.register("yess", () => {
+  return ["yeah", undefined, "xdxdds"];
 });

@@ -16,7 +16,10 @@ CreateThread(function()
     local list = exports['inventory']:getItemList()
     local itemList = {}
     for i,v in pairs (list) do
-        table.insert(itemList, i)
+        table.insert(itemList, {
+            itemId = i,
+            label = v.label
+        })
     end
 
     SendNUIMessage({
@@ -31,17 +34,6 @@ function hideUi()
         show = false
     })
 end
-
-RegisterCommand('adminn', function()
-    if enabled then
-        hideUi() 
-    else
-        local admin_level = RPC.execute("getLevel")
-        if admin_level then
-            showUi(admin_level) 
-        end
-    end
-end)
 
 RegisterCommand('+adminMenu', function()
     local admin_level = RPC.execute("getLevel")

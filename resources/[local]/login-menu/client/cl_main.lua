@@ -1,4 +1,5 @@
 local enabled = false
+local currentChar = nil
 
 function showUi()
     enabled = true
@@ -19,17 +20,12 @@ end
 function openMenu()
     exports['interaction']:hide()
     exports['players']:SetClientVar("inGame", false)
-
     exports['players']:SetClientVar("isDead", false)
     Player(GetPlayerServerId(PlayerId())).state:set('isDead', false, true)
-
     exports['players']:SetClientVar("inTrunk", false)
-
     exports['players']:SetClientVar("isCuffed", false)
     Player(GetPlayerServerId(PlayerId())).state:set('isCuffed', false, true)
-    
     exports['players']:SetClientVar("beingEscorted", false)
-
     exports['players']:SetClientVar("character", nil)
 
     showUi()
@@ -54,31 +50,60 @@ function closeMenu()
 end
 
 RegisterNUICallback('nuiAction', function(data, cb)
-    if data.action == 'fetchCharacters' then
+    local action = data.action
+    local content = data.data
+    print ("NuiAction | "..json.encode(data))
+
+    if action == 'fetchCharacters' then
         local succ = RPC.execute('login:fetchCharacters')
+        CreatePlayerCharacterPeds(succ)
         cb(succ)
-    elseif data.action == 'createCharacter' then
+    elseif action == 'createCharacter' then
         local succ = RPC.execute('login:createCharacter', data.data)
         cb(succ)
-    elseif data.action == 'selectCharacter' then
-        local data = RPC.execute('login:selectCharacter', data.data.citizen_id)
-        cb(data ~= false)
+    elseif action == 'selectCharacter' then
+        if currentChar then
+            local data = RPC.execute('login:selectCharacter', currentChar.character_id)
+            cb(data ~= false)
+            local LocalPlayer = exports['players']:SetClientVar("character", data)
 
-        local LocalPlayer = exports['players']:SetClientVar("character", data)
+            local PlayerPed = PlayerPedId()
+            SetPlayerInvincible(PlayerPed, true)
 
-        local PlayerPed = PlayerPedId()
-        SetPlayerInvincible(PlayerPed, true)
+            closeMenu()
 
-        closeMenu()
+            SetPlayerInvincible(PlayerPed, false)
+            TriggerEvent("login:firstSpawn", LocalPlayer)
 
-        SetPlayerInvincible(PlayerPed, false)
-        TriggerEvent("login:firstSpawn", LocalPlayer)
+            exports['jp-weather']:toggle(true)
+            exports['jp-weather']:forceUpdate()    
+        end
+    elseif action == 'click' then
+        local loginCam = exports['spawn_manager']:GetLoginCam()
+        local hit, endCoords, surface, entity = screenToWorld(8, PlayerPedId(), GetCamCoord(loginCam))
+        local found
+
+        if (hit and entity and entity ~= 0) then
+            for _,v in pairs (currentPedChoices) do
+                if (v.ped == entity) then
+                    found = v
+                    break
+                end
+            end
+        end
+
+        if found then
+            currentChar = found.char
+            SendNUIMessage({
+                setCurrent = found.char
+            })
+        end
     end
 end)
 
 AddEventHandler("spawnmanager:spawnInitialized", function()
     ShutdownLoadingScreenNui()
-    Wait(500) --* ARBITRARY WAIT BEFORE OPENING CHARACTER SELECTION MENU
+    -- Wait(500) --* ARBITRARY WAIT BEFORE OPENING CHARACTER SELECTION MENU
     openMenu()
 end)
 
@@ -92,4 +117,8 @@ RegisterCommand("log", function()
     else 
         closeMenu() 
     end
+end)
+
+CreateThread(function()
+    exports['spawn_manager']:doInitialize()
 end)

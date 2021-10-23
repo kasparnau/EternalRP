@@ -1,32 +1,52 @@
+local loginCam = nil
+
+function SetCharacterLoginCam()
+    loginCam = CreateCam("DEFAULT_SCRIPTED_CAMERA", 1)
+	local camCoords = {1771.6878662109,-1659.6131591797,113.03442382812 }
+    SetEntityCoordsNoOffset(PlayerPedId(), vector3(1771.6878662109,-1659.6131591797,113.03442382812 ), false, false, false, false)
+	SetCamRot(loginCam, 0.0, 0.0, -310.0, 2)
+	SetCamCoord(loginCam, camCoords[1], camCoords[2], camCoords[3])
+	StopCamShaking(loginCam, true)
+	SetCamFov(loginCam, 50.0)
+	SetCamActive(loginCam, true)
+	RenderScriptCams(true, false, 0, true, true)
+end
+
+exports("GetLoginCam", function()
+    return loginCam
+end)
+
+function setGoodWeather()
+    exports['jp-weather']:toggle(false)
+end
+
 function doInitialize()
+    setGoodWeather()
+    
     FreezeEntityPosition(PlayerPedId(), true)
 
-    TransitionToBlurred(100)
+    -- TransitionToBlurred(100)
     DoScreenFadeOut(100)
 
     ShutdownLoadingScreen()
 
-    local cam = CreateCam("DEFAULT_SCRIPTED_CAMERA", 1)
-
-    SetCamRot(cam, -10.0, 0.0, -77.0, 2)
-    SetCamCoord(cam, -2091.6000976562,-1265.8022460938,147.39709472656)
-    SetCamActive(cam, true)
-    RenderScriptCams(true, false, 0, true, true)
-
     local ped = PlayerPedId()
 
-    SetEntityCoordsNoOffset(ped, -2091.6000976562,-1265.8022460938,147.39709472656, false, false, false, true)
+    SetEntityCoordsNoOffset(ped, 1771.6878662109,-1659.6131591797,113.03442382812, false, false, false, false)
 
     SetEntityVisible(ped, false)
 
-    TriggerEvent("spawnmanager:spawnInitialized")
-    TriggerServerEvent("spawnmanager:spawnInitialized")
+    SetCharacterLoginCam()
 
     DoScreenFadeIn(500)
 
     while IsScreenFadingIn() do
         Wait(0)
     end
+
+    TriggerEvent("spawnmanager:spawnInitialized")
+    TriggerServerEvent("spawnmanager:spawnInitialized")
+
 end
 
 exports('doInitialize', doInitialize)
@@ -95,11 +115,9 @@ function InitialSpawn(plrData)
     CreateThread(function()
         DisableAllControlActions(0)
 
-        TransitionToBlurred(100)        
-        DoScreenFadeOut(50)
-
+        DoScreenFadeOut(10)
         while IsScreenFadingOut() do
-            Wait(0)
+            Citizen.Wait(0)
         end
 
         local character = exports['players']:GetClientVar("character")
@@ -144,19 +162,28 @@ function InitialSpawn(plrData)
         }
 
         TriggerEvent("spawnmanager:initialSpawnModelLoaded")
-
-        RequestCollisionAtCoord(spawn.x, spawn.y, spawn.z)
-
+    
+        --// TELEPORT START
         local ped = PlayerPedId()
 
+        RequestCollisionAtCoord(spawn.x, spawn.y, spawn.z)
         SetEntityCoordsNoOffset(ped, spawn.x, spawn.y, spawn.z, false, false, false, true)
+        FreezeEntityPosition(ped, true)
+        SetEntityVisible(ped, false)
+
+        local startedCollision = GetGameTimer()
+
+        while not HasCollisionLoadedAroundEntity(ped) do
+            if GetGameTimer() - startedCollision > 5000 then break end
+            Citizen.Wait(0)
+        end
 
         SetEntityVisible(ped, true)
         FreezeEntityPosition(ped, false)
-
+        SetPedCoordsKeepVehicle(ped, spawn.x, spawn.y, spawn.z)
+        --// TELEPORT END
+        
         NetworkResurrectLocalPlayer(spawn.x, spawn.y, spawn.z, spawn.heading, true, true, false)
-
-        SetTimecycleModifier('default')
 
         ClearPedTasksImmediately(ped)
         RemoveAllPedWeapons(ped)
@@ -179,14 +206,13 @@ function InitialSpawn(plrData)
             exports['death']:respawn()
         end
 
-        Wait(1000) --* WAIT FOR CLOTHES TO BE SET ETC
+        Wait(500) --* WAIT FOR CLOTHES TO BE SET ETC
         DoScreenFadeIn(250)
 
         while IsScreenFadingIn() do
             Wait(0)
         end
 
-        TransitionFromBlurred(100)
         EnableAllControlActions(0)
 
         exports['players']:SetClientVar("inGame", true)

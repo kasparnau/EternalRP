@@ -3,6 +3,7 @@ games { 'gta5' }
 
 server_scripts {
     'server/sv_*.lua',
+    'server/sv_*.js'
 }
 
 client_scripts {

@@ -54,7 +54,8 @@ RPC.register('login:fetchCharacters', function(source)
             gender,
             dob as date_of_birth,
             phone_number,
-            dead
+            dead,
+            outfit
         FROM characters
         WHERE pid=?
     ]]
