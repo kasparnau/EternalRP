@@ -17,7 +17,7 @@ Queue.OnReady(function()
                 local success, err = pcall(function()
                     local banEnd = Date.new(banData.date + banData.length + 10800) --* 7200 = 3 HOURS FOR GMT +3
                     local banString = banEnd:Format("%B, %d %Y "..banEnd:ToTimeString())
-                    allow("Sa oled keelustatud mu serverist :). \nhttps://eternalrp.me, Ban ID: "..banData.id.."\nLõppeb: "..banString.." (GMT +3)\nPõhjus: "..banData.reason.."\nSind Bannis: "..banData.banner)    
+                    allow("Sa oled keelustatud mu serverist :). \nhttps://eternalrp.me, Seotud Ban ID: "..banData.id.."\nLõppeb: "..banString.." (GMT +3)\nPõhjus: "..banData.reason.."\nSind Bannis: "..banData.banner)    
                     return
                 end)
                 if not success then
