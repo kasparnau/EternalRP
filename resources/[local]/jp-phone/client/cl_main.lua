@@ -95,6 +95,7 @@ function updateNoti(id, title, desc, buttons, icon)
 end
 
 function removeNoti(id)
+    print ("Remove ID: "..id)
     SendNUIMessage({
         removeNoti = id
     })
@@ -124,7 +125,7 @@ RegisterNUICallback('nuiAction', function(data, cb)
     elseif (action == 'fetchDetailsPage') then
         local character = exports['players']:GetClientVar("character")
         local data = {citizen_id = character.cid, phone_number = character.phone_number, 
-        bank = character.bank, licenses = character.licenses, faction = character.faction, job = exports['npcjobs']:getJobEstonian(character.job)}
+        bank = character.bank, licenses = character.licenses, faction = character.faction}
 
         cb(data)
     elseif (action == "fetchTwitterPage") then

@@ -192,6 +192,8 @@ RPC.register('login:selectCharacter', function(source, citizen_id)
 end)
 
 RPC.register("inMenu", function(source)
-    exports['players']:setPlayerCurrentCharacter(source, nil)
-    -- SetPlayerRoutingBucket(source, 1)
+    if exports['players']:getCharacter(source) then
+        exports['players']:setPlayerCurrentCharacter(source, nil)
+    end
+    SetPlayerRoutingBucket(source, 1)
 end)

@@ -341,9 +341,6 @@ CreateThread(function()
             local playerArmour = GetPedArmour(playerPed)
 
             if playerHealth ~= lastHealth or playerArmour ~= lastArmor then
-                -- updateHealthStatus(playerHealth-100)
-                -- updateArmorStatus(playerArmour)
-
                 lastHealth = playerHealth
                 lastArmor = playerArmour
 

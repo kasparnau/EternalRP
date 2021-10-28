@@ -52,7 +52,7 @@ Citizen.CreateThread( function()
 		if IsPedShooting(ped) then
             local hash = GetSelectedPedWeapon(ped)
 
-            if not lastEquippedWeapon or not exports['inventory']:hasEnoughOfItem(getItemIdFromHash(lastEquippedWeapon), 1) then
+            if not lastEquippedWeapon or not getItemIdFromHash(lastEquippedWeapon) or not exports['inventory']:hasEnoughOfItem(getItemIdFromHash(lastEquippedWeapon), 1) then
                 TriggerEvent("DoLongHudText", "Sa tulistasid relvaga mida sa ei oma!!!! >:( automaatne ban peale kui poleks vMenu XD", "red", 5000)
                 -- TriggerServerEvent("admin:banMyAss", ("Fired not owned weapon: %s (%s)"):format(hash, id), 5259492)
                 -- return

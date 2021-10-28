@@ -28,6 +28,7 @@ function LoadPed(ped, data, model, gender)
     SetClothing(ped, data.drawables, data.props, data.drawtextures, data.proptextures)
     Citizen.Wait(500)
     if (model == `mp_f_freemode_01` or model == `mp_m_freemode_01`) then
+        print ("here1")
         SetPedHeadBlend(ped, data.headBlend)
         SetHeadStructure(ped, data.headStructure)
         SetHeadOverlayData(ped, data.headOverlay)
@@ -38,6 +39,9 @@ function LoadPed(ped, data, model, gender)
           Wait(1)
           SetPedFacialDecoration(ped, fadeConfig[1], fadeConfig[2])
         end
+    else
+        print "here2"
+        SetSkin(ped, model)
     end
     return
 end

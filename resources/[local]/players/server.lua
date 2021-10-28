@@ -67,6 +67,9 @@ end)
 --
 
 exports("setPlayerCurrentCharacter", function(source, charData)
+    if not exports['players']:getPlayerDataFromSource(source) then
+        DropPlayer(source, "hmmmm out of sync??? ytle klicerile kui juhtub")
+    end
     local pid = exports['players']:getPlayerDataFromSource(source).pid
 
     Cache.Characters[pid] = charData

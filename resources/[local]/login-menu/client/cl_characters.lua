@@ -79,7 +79,6 @@ function CreatePlayerCharacterPeds(characters)
     ClearSpawnedPeds()
     CleanUpArea()
     
-    print (#characters.." | "..json.encode(characters))
     for _, char in pairs (characters) do
         local cModel 
 
@@ -87,6 +86,11 @@ function CreatePlayerCharacterPeds(characters)
             cModel = GetHashKey("mp_f_freemode_01")
         else
             cModel = GetHashKey("mp_m_freemode_01")
+        end
+
+        local outfit = json.decode(char.outfit)
+        if outfit and outfit.model then
+            cModel = outfit.model
         end
         
         local function CreatePedPCall(pHash, pX, pY, pZ)

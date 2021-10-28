@@ -189,7 +189,7 @@ shops = {
         },
         {
             itemId = 'phone',
-            price = 100
+            price = 225
         }
     },
     [11] = { --// VENDING DRINKS
@@ -251,7 +251,7 @@ shops = {
         -- },
         {
             itemId = 'radio',
-            price = 500
+            price = 2450
         },
         {
             itemId = 'binoculars',

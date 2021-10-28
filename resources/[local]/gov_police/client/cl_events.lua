@@ -216,7 +216,7 @@ AddEventHandler("police:makePrisonFood", function()
 			exports['progress']:Progress({
 				name = "prison_food",
 				duration = 30*1000,
-				label = ('Võtad Vangla Toittu...'),
+				label = ('Võtad Vangla Toitu...'),
 				useWhileDead = false,
 				canCancel = true,
 				controlDisables = {disableMovement = true,disableCarMovement = true,disableMouse = false,disableCombat = true},

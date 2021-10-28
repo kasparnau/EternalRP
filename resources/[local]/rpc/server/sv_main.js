@@ -41,7 +41,3 @@ onNet("rpc:request", (resource, name, callID, params) => {
   console.log("returning response: " + JSON.stringify(response));
   emitNet("rpc:response", source, resource, callID, response);
 });
-
-RPC.register("yess", () => {
-  return ["yeah", undefined, "xdxdds"];
-});

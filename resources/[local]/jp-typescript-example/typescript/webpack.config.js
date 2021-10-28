@@ -1,9 +1,11 @@
 const path = require("path");
+const WebpackObfuscator = require("webpack-obfuscator");
 
 module.exports = {
   entry: {
-    server: { import: "./src/server/index.ts", filename: "server/server.js" },
-    client: { import: "./src/client/index.ts", filename: "client/client.js" },
+    server: { import: "./src/server/index.ts", filename: "server/sv_main.js" },
+    shared: { import: "./src/shared/index.ts", filename: "shared/sh_main.js" },
+    client: { import: "./src/client/index.ts", filename: "client/cl_main.js" },
   },
   mode: "production",
   module: {
@@ -22,4 +24,5 @@ module.exports = {
     filename: "[name].js",
     path: path.resolve(__dirname, "../"),
   },
+  plugins: [new WebpackObfuscator({}, ["server/**.js"])],
 };

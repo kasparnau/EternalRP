@@ -512,8 +512,10 @@ function UseItem(data)
             -- end
         end
 
+        print (json.encode(item))
+        TriggerEvent("inventory:itemUsed", item)
         if not itemActions[item.itemId] then 
-            exports['alerts']:notify('Inventory', "Sellel asjal ("..item.itemId..") pole veel kasutusts. klicer prolly teab", 'errorAlert', 2500)    
+            -- exports['alerts']:notify('Inventory', "Sellel asjal ("..item.itemId..") pole veel kasutusts. klicer prolly teab", 'errorAlert', 2500)    
             return 
         end
 

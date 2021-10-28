@@ -125,9 +125,9 @@ RPC.register("callPlayer", function(source, number, name)
         end
     end
 
-    if not target or getPlayerCall(target) or getPlayerCall(source) or target == source then
-        TriggerClientEvent("DoLongHudText", source, "Isik ei ole hetkel kättesaadaval", "red")
-        TriggerClientEvent("jp-phone:calls:stop", source)
+    if not target or getPlayerCall(target) or getPlayerCall(source) then
+        -- TriggerClientEvent("DoLongHudText", source, "Isik ei ole hetkel kättesaadaval", "red")
+        TriggerClientEvent("jp-phone:calls:stop", source, "Isik ei ole hetkel kättesaadaval...")
         return false
     end
 
@@ -137,8 +137,8 @@ RPC.register("callPlayer", function(source, number, name)
         local ind = #calls
         Wait(30*1000)
         if calls[ind] and calls[ind].status == 'pending' then
-            TriggerClientEvent("DoLongHudText", source, "Isik ei vastand sinu kõnele!", "red")
-            TriggerClientEvent("jp-phone:calls:stop", source)
+            -- TriggerClientEvent("DoLongHudText", source, "Isik ei vastand sinu kõnele!", "red")
+            TriggerClientEvent("jp-phone:calls:stop", source, "Isik ei vastand sinu kõnele...")
             TriggerClientEvent("jp-phone:calls:stop", target)       
             table.remove(calls, ind) 
         end

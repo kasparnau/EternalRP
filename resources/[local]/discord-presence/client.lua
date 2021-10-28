@@ -1,3 +1,5 @@
+local activePlayers = 69420
+
 Citizen.CreateThread(function()
 	while true do
         SetDiscordAppId(897880577921941504)
@@ -5,7 +7,7 @@ Citizen.CreateThread(function()
         SetDiscordRichPresenceAssetText('Eternal RP')
         SetDiscordRichPresenceAssetSmall('eternal_logo')
         SetDiscordRichPresenceAssetSmallText('EternalRP')
-        SetRichPresence("Mängijaid: " ..#GetActivePlayers().. "/48")
+        SetRichPresence("Mängijaid: " ..activePlayers.. "/48")
         SetDiscordRichPresenceAction(0, "Koduleht", "https://eternalrp.me/")
         SetDiscordRichPresenceAction(1, "Discord", "https://discord.io/eternalinvite")
 

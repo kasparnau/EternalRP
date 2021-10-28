@@ -9,6 +9,19 @@ AddEventHandler("players:ClientVarChanged", function(name, old, new)
     end
 end)
 
+function doDisconnectCallNoti(message)
+    local notiId = tonumber(callNoti)
+    if not notiId then return end
+
+    callNoti = nil
+
+    updateNoti(notiId, callerId, message or "Disconnectib...", nil, 2)
+    CreateThread(function()
+        Wait(2000)
+        removeNoti(notiId)
+    end)
+end
+
 AddEventHandler("jp-phone:notiAction", function(id, accept)
     if id == callNoti then
         if not inCall then
@@ -17,8 +30,7 @@ AddEventHandler("jp-phone:notiAction", function(id, accept)
             })
             local channel = RPC.execute("answerCall", accept)
             if not accept then
-                removeNoti(callNoti)
-                callNoti = nil
+                doDisconnectCallNoti()
             elseif accept then
                 exports['pma-voice']:setCallChannel(channel)
                 inCall = true
@@ -81,8 +93,7 @@ RegisterNetEvent("jp-phone:callRequest:answer", function(answered, channel)
         updateNoti(callNoti, callerId, "Kõne", { no = true }, 2)
         startCallTimer()
     else
-        removeNoti(callNoti)
-        callNoti = nil
+        doDisconnectCallNoti()
     end
 end)
 
@@ -106,9 +117,9 @@ RegisterNUICallback("nuiAction", function(data, cb)
 end)
 
 RegisterNetEvent("jp-phone:calls:stop")
-AddEventHandler("jp-phone:calls:stop", function()
+AddEventHandler("jp-phone:calls:stop", function(message)
     inCall = false
-    removeNoti(callNoti)
+    doDisconnectCallNoti(message)
 
     if not enabled then
         PhonePlayOut()

@@ -230,7 +230,7 @@ function respawn()
     DeadTimer = 300
 
     ClearPedTasksImmediately(PlayerPedId())
-    exports['alerts']:notify('Pillbox Medical', "Haigla töötajad äratasid teid ellu.", "infoAlert", 10000)
+    exports['alerts']:notify('Pillbox Medical', "Haigla töötajad elustasid teid.", "infoAlert", 10000)
     FreezeEntityPosition(PlayerPedId(), false)
 
     if character.jail_time <= 0 then

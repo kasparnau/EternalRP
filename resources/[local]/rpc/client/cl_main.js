@@ -60,8 +60,3 @@ onNet("rpc:response", (origin, callID, ...args) => {
     Promises[callID].resolve(...args);
   }
 });
-
-setTimeout(async () => {
-  let [resp, k, ko] = await RPC.execute("yess");
-  console.log(`${resp} | ${k} | ${ko}`);
-}, 500);

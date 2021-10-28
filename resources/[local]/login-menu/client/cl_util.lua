@@ -159,7 +159,6 @@ function degToRad(deg)
     return (deg * math.pi) / 180.0
 end
 
- -- Get entity, ground, etc. targeted by mouse position in 3D space.
 function screenToWorld(flags, ignore, camPos)
     local x, y = GetNuiCursorPosition()
     local absoluteX = x

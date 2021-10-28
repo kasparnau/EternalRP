@@ -75,3 +75,7 @@ AddPeekEntryByFlag({ 'isNPC' }, {
         return GetEntityContext(pEntity).npcId == `job_center` 
     end
 })
+
+AddEventHandler("npcjobs:openMenu", function()
+    TriggerEvent("DoLongHudText", "Vaata töökohti telefonist!!", "red", 5000)
+end)

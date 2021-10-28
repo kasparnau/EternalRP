@@ -107,7 +107,7 @@ end)
 
 AddEventHandler("spawnmanager:spawnInitialized", function()
     ShutdownLoadingScreenNui()
-    -- Wait(500) --* ARBITRARY WAIT BEFORE OPENING CHARACTER SELECTION MENU
+    Wait(1000) --* ARBITRARY WAIT BEFORE OPENING CHARACTER SELECTION MENU
     openMenu()
 end)
 
