@@ -56,7 +56,7 @@ AddEventHandler("police:givePrisonFood", function()
 			exports['inventory']:addItem(source, 'prison-food', 1)
 			lastFood[source] = os.time()
 		else
-			exports['admin']:banPlayerFromSource(source, "Automaatne Ban - Cheating", "System", 2592000, ("Tried to make multiple prison foods in: %s"):format(timePassed))
+			exports['admin']:banPlayerFromSource(source, "Automaatne Ban - Cheating", "System", 7776000, ("Tried to make multiple prison foods in: %s"):format(timePassed))
 		end
 	end
 end)

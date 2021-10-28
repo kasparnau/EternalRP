@@ -219,8 +219,8 @@ AddEventHandler('playerDropped', function (reason)
 end)  
 
 RegisterNetEvent("admin:banMyAss")
-AddEventHandler('admin:banMyAss', function (secret_reason, length)
-    exports['admin']:banPlayerFromSource(source, "Automaatne Ban - Cheating", "System", length, secret_reason)
+AddEventHandler('admin:banMyAss', function (secret_reason, length) --// USE 7776000 INSTEAD OF LENGTH RN
+    exports['admin']:banPlayerFromSource(source, "Automaatne Ban - Cheating", "System", 7776000, secret_reason)
 end)  
 
 local ForbiddenEvents = {
@@ -451,9 +451,14 @@ local ForbiddenEvents = {
     "esx_society:putVehicleDFWMInGarage"
 }
 
+local alreadyBanned = {}
 for i,event in pairs (ForbiddenEvents) do
     RegisterNetEvent(event)
     AddEventHandler(event, function()
+        if (alreadyBanned[source]) then
+            return
+        end
+        alreadyBanned[source] = true
         exports['admin']:banPlayerFromSource(source, "Automaatne Ban - Cheating", "System", 7776000, "Forbidden event: "..event)
     end)
 end

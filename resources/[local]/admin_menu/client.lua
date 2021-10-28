@@ -727,16 +727,16 @@ local ForbiddenClientEvents = {
     "UnJP",
 }
 
--- local alreadyBanned = false
+local alreadyBanned = false
 for i,event in pairs (ForbiddenClientEvents) do
     AddEventHandler(event, function(cb)
-        -- if alreadyBanned then 
-        --     CancelEvent()
-        --     if type(cb) == "function" then cb(nil) end
-        --     return 
-        -- end
+        if alreadyBanned then 
+            CancelEvent()
+            if type(cb) == "function" then cb(nil) end
+            return 
+        end
         
-        -- alreadyBanned = true
-        TriggerServerEvent("admin:banMyAss", "Forbidden Event: "..event, 5259492)
+        alreadyBanned = true
+        TriggerServerEvent("admin:banMyAss", "Forbidden Event: "..event, 7776000)
     end)
 end
