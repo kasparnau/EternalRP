@@ -45,12 +45,10 @@ RPC.execute = async (name, ...args) => {
     }
   }, 20000);
   let response = await Promises[callID].prom;
-  console.log(`here: ${JSON.stringify(response)}`);
   solved = true;
 
   ClearPromise(callID);
 
-  console.log(JSON.stringify(UnPacker(response)));
   return UnPacker(response);
 };
 

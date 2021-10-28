@@ -38,6 +38,5 @@ onNet("rpc:request", (resource, name, callID, params) => {
   if (response === undefined) {
     response = {};
   }
-  console.log("returning response: " + JSON.stringify(response));
   emitNet("rpc:response", source, resource, callID, response);
 });

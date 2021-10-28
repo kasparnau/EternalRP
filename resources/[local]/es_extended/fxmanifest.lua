@@ -1,4 +1,15 @@
 fx_version 'cerulean'
-games { 'gta5'}
+games {'gta5'}
 
-client_script 'client/common.lua'
+server_script '@rpc/server/sv_main.js'
+client_script '@rpc/client/cl_main.js'
+
+client_scripts {
+    'shared/*.js',
+    'client/*.js',
+}
+
+server_scripts {
+    'shared/*.js',
+    'server/*.js'
+}
