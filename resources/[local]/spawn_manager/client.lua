@@ -19,12 +19,19 @@ end)
 function setGoodWeather()
     exports['jp-weather']:toggle(false)
 
-    ClearOverrideWeather()
-    ClearWeatherTypePersist()
-    SetWeatherTypePersist('EXTRASUNNY')
-    SetWeatherTypeNow('EXTRASUNNY')
-    SetWeatherTypeNowPersist('EXTRASUNNY')
-    NetworkOverrideClockTime(18, 0, 0)
+    CreateThread(function()
+        while true do
+            local char = exports['players']:getCharacter()
+            if char then return end
+            ClearOverrideWeather()
+            ClearWeatherTypePersist()
+            SetWeatherTypePersist('EXTRASUNNY')
+            SetWeatherTypeNow('EXTRASUNNY')
+            SetWeatherTypeNowPersist('EXTRASUNNY')
+            NetworkOverrideClockTime(18, 0, 0)
+            Wait(0)
+        end
+    end)
 end
 
 function doInitialize()
@@ -53,7 +60,6 @@ function doInitialize()
 
     TriggerEvent("spawnmanager:spawnInitialized")
     TriggerServerEvent("spawnmanager:spawnInitialized")
-
 end
 
 exports('doInitialize', doInitialize)
@@ -114,6 +120,9 @@ AddEventHandler("players:playerSessionStarted", function()
             Wait(100)
         end
     end)
+
+    SetWeaponsNoAutoreload(false)
+    SetWeaponsNoAutoswap(false)
     --SetPoliceIgnorePlayer(playerPed,true)
     --SetPoliceIgnorePlayer(playerId,true)
 end)

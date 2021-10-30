@@ -96,11 +96,11 @@ exports("checkBanFromSource", function(source)
     return false
 end)
 
-exports("banPlayerFromSource", function(player, reason, banner, length, secret_reason)
+function banPlayerFromSource(player, reason, banner, length, secret_reason)
     local license, license2, steam, discord, fivem, source
     if type(player) == "table" then
         license = player.license
-        license2 = playear.license
+        license2 = player.license
         steam = player.steam
         discord = player.discord
         fivem = player.fivem
@@ -136,7 +136,10 @@ exports("banPlayerFromSource", function(player, reason, banner, length, secret_r
             end
         end    
     end
-end)
+end
+
+exports("banPlayerFromSource", banPlayerFromSource)
+exports("banPlayer", banPlayerFromSource)
 
 -- -- ANTICHEAT
 -- local blockedItems = {

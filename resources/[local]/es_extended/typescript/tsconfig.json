@@ -1,17 +1,16 @@
 {
+  "extends": "@tsconfig/node16/tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist/",
-    "noImplicitAny": true,
-    "module": "es6",
-    "target": "es6",
-    "allowJs": true,
-    "moduleResolution": "node",
-    "baseUrl": "src",
+    "target": "es2020",
+    "lib": ["es2020"],
+    "module": "ES2020",
+    "moduleResolution": "Node",
     "types": ["@citizenfx/server", "@citizenfx/client", "node"],
+    "baseUrl": "src",
     "paths": {
-      "@shared/*": ["shared/*"],
-      "@client/*": ["client/*"],
-      "@server/*": ["server/*"]
+      "#shared/*": ["shared/*"],
+      "#client/*": ["client/*"],
+      "#server/*": ["server/*"]
     }
   }
 }
