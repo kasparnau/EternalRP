@@ -3,7 +3,7 @@ const WebpackObfuscator = require("webpack-obfuscator");
 
 module.exports = function (env, argv) {
   let pPlugins = [];
-  if (env.obfuscate === true) {
+  if (env.obfuscate === `true`) {
     pPlugins.push(new WebpackObfuscator({}, ["server/**.js"]));
   }
   return {

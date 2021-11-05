@@ -13,5 +13,3 @@ exp("getSharedObject", (cb: (p0: object) => unknown) => {
   BanMe();
   if (cb) cb({});
 });
-
-console.log("yeah boyss");

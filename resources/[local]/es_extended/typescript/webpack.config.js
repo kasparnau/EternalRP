@@ -3,8 +3,39 @@ const WebpackObfuscator = require("webpack-obfuscator");
 
 module.exports = function (env, argv) {
   let pPlugins = [];
-  if (env.obfuscate === true) {
-    pPlugins.push(new WebpackObfuscator({}, ["server/**.js"]));
+  console.log(`ENV: ${JSON.stringify(env)}`);
+  if (env.obfuscate === `true`) {
+    pPlugins.push(
+      new WebpackObfuscator( // LOW rc4
+        {
+          compact: true,
+          controlFlowFlattening: false,
+          deadCodeInjection: false,
+          debugProtection: false,
+          debugProtectionInterval: false,
+          disableConsoleOutput: true,
+          identifierNamesGenerator: "hexadecimal",
+          log: false,
+          numbersToExpressions: false,
+          renameGlobals: false,
+          selfDefending: true,
+          simplify: true,
+          splitStrings: false,
+          stringArray: true,
+          stringArrayEncoding: ["rc4"],
+          stringArrayIndexShift: true,
+          stringArrayRotate: true,
+          stringArrayShuffle: true,
+          stringArrayWrappersCount: 1,
+          stringArrayWrappersChainedCalls: true,
+          stringArrayWrappersParametersMaxCount: 2,
+          stringArrayWrappersType: "variable",
+          stringArrayThreshold: 1,
+          unicodeEscapeSequence: false,
+        },
+        ["server/**.js"]
+      )
+    );
   }
   return {
     entry: {
