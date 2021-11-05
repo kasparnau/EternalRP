@@ -1,3 +1,6 @@
+const exp = (<any>global).exports;
+const SQL = exp["jp-sql2"];
+
 interface PlayerIdentifiers {
   license: string;
   license2: string;
@@ -28,16 +31,35 @@ const GetIdentifiers = (player: string | number): PlayerIdentifiers => {
 };
 
 const BanPlayer = (
-  player: string,
+  player: string | number,
+  secret_reason: string = "",
   length: number = 7776000,
-  secret_reason: string = "anti-cheat",
   reason: string = "Automaatne Ban - Cheating",
   banner: string = "Systeem"
 ): void => {
-  const identifiers = GetIdentifiers(player);
+  const id = GetIdentifiers(player);
 
-  // //@ts-ignore
-  // exp.admin.banPlayer(player, reason, banner, length, secret_reason);
+  const query = `
+    INSERT INTO bans (license, license2, steam, discord, fivem, length, reason, banner, secret_reason)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+  const queryData = [
+    id.license,
+    id.license2,
+    id.steam,
+    id.discord,
+    id.fivem,
+    length,
+    reason,
+    banner,
+    id.secret_reason,
+  ];
+  SQL.execute(query, queryData);
+
+  DropPlayer(
+    player.toString(),
+    "Sind keelustati serverist. Reconnecti lisainfo jaoks."
+  );
 };
 
 export { BanPlayer, GetIdentifiers };

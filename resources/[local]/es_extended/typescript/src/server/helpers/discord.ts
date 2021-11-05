@@ -16,17 +16,17 @@ const DoDiscordLog = (
     const val: string = identifiers[key];
     descIdStr += `**${key}:** ${val} \n`;
   });
-  console.log(descIdStr);
 
   const embeds = [
     {
       color: 16711680,
-      title: `**noob cheater alert :sob:** [${player}] (${title})`,
+      title: `**noob alert: ** [${GetPlayerName(
+        player.toString()
+      )}] (${title})`,
       description: `${message} ${descIdStr}`,
     },
   ];
 
-  console.log("trying..");
   fetch(webhookURL, {
     method: "POST",
     headers: {

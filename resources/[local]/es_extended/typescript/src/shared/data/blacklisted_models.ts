@@ -1,9 +1,4 @@
 let blacklistedModels: string[] = [
-  "rhino",
-  "jet",
-  // "blimp",
-  // "blimp2",
-  // "blimp3",
   "stt_prop_stunt_track_uturn",
   "stt_prop_stunt_track_turnice",
   "stt_prop_stunt_track_hill",

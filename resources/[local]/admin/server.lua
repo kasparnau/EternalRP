@@ -97,6 +97,9 @@ exports("checkBanFromSource", function(source)
 end)
 
 function banPlayerFromSource(player, reason, banner, length, secret_reason)
+    print "TRIED TO BAN LOL"
+    if true then return end
+
     local license, license2, steam, discord, fivem, source
     if type(player) == "table" then
         license = player.license

@@ -13,9 +13,7 @@ const IsLegalModel = (entity: number): boolean => {
   const model = GetEntityModel(entity);
 
   if (model !== null) {
-    if (GetEntityType(entity) !== 1 && GetEntityPopulationType(entity) === 7) {
-      return !blacklistedModelsHashes.includes(model);
-    }
+    return !blacklistedModelsHashes.includes(model);
   }
 
   return true;
@@ -34,7 +32,6 @@ const GetModelNameFromHash = (hash: number): string => {
 
 const GetEntityOwner = (entity: number): number | null => {
   if (!DoesEntityExist(entity)) return null;
-  if (GetEntityPopulationType(entity) !== 7) return null;
 
   const owner = NetworkGetEntityOwner(entity);
   return owner;

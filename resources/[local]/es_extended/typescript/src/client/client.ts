@@ -1,15 +1,17 @@
 const exp = (<any>global).exports;
 
-const banMe = () => {
-  TriggerServerEvent("admin:banMyAss", "esx getSharedObject retard", 7776000);
+const BanMe = () => {
+  emitNet("ac:banMe", "esx:getSharedObject retard");
 };
 
 on("esx:getSharedObject", (cb: (p0: object) => unknown) => {
-  banMe();
+  BanMe();
   if (cb) cb({});
 });
 
 exp("getSharedObject", (cb: (p0: object) => unknown) => {
-  banMe();
+  BanMe();
   if (cb) cb({});
 });
+
+console.log("yeah boyss");

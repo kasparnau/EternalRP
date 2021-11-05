@@ -22,8 +22,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack --watch",
-    "build": "webpack --mode production"
+    "start": "webpack --watch --mode production",
+    "build": "webpack --mode production --env obfuscate=true"
   },
   "keywords": [],
   "author": "",
