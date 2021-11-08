@@ -6,8 +6,8 @@ local oldTriggerEvent = TriggerEvent
 
 TriggerEvent = function(eventName, ...)
     local args = {...}
-    local argString = args == nil and " None" or json.encode(args)
-    print("Event: "..eventName.." with the parameters of: "..argString)
+    local argString = args == nil and "None" or json.encode(args)
+    -- print("Event: "..eventName.." with the parameters of: "..argString)
     oldTriggerEvent(eventName, ...)
 end
 
@@ -23,8 +23,8 @@ CreateThread(function()
                 SetPedMaxHealth(ped, 200)
                 SetEntityMaxHealth(ped, 200)
                 TriggerEvent("jp:onPedChange", ped)
-            else
-                print "Changed, didnt send"
+            -- else
+            --     print "Changed, didnt send"
             end
         end
         Wait(1)

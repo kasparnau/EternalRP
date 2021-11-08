@@ -4,7 +4,7 @@ import {
   IsLegalModel,
   GetEntityOwner,
   GetModelNameFromHash,
-} from "#server/utils/models";
+} from "#server/helpers/models";
 
 import { BanPlayer } from "#server/helpers/ban";
 import { DoDiscordLog } from "#server/helpers/discord";
@@ -19,7 +19,6 @@ AddEventHandler("entityCreating", (entity: number): void => {
   const legal = IsLegalModel(entity);
 
   if (!legal) {
-    // TYPE: OBJECT
     if (owner && GetEntityType(entity) === 3) {
       DoDiscordLog(
         owner,
@@ -36,6 +35,18 @@ AddEventHandler("entityCreating", (entity: number): void => {
     CancelEvent();
   }
 });
+
+RegisterCommand(
+  "asd",
+  (source: string) => {
+    DoDiscordLog(
+      source,
+      `YRITAS SPAWNIDA KEELATUD OBJECTI: TEST LOL`,
+      "vb hacker, BANNED. pole 100% hacker niiet kui viriseb saab unbannida olenevalt et mis object oli"
+    );
+  },
+  false
+);
 
 // RegisterCommand(
 //   "tokens",

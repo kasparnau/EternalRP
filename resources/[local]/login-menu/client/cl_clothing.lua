@@ -6,18 +6,29 @@ tatCategory = nil
 tattooHashList = nil
 
 function SetSkin(ped, model)
-    SetPedHeadBlendData(ped, 0, 0, 0, 15, 0, 0, 0, 1.0, 0, false)
-    SetPedComponentVariation(ped, 11, 0, 11, 0)
-    SetPedComponentVariation(ped, 8, 0, 1, 0)
-    SetPedComponentVariation(ped, 6, 1, 2, 0)
-    SetPedHeadOverlayColor(ped, 1, 1, 0, 0)
-    SetPedHeadOverlayColor(ped, 2, 1, 0, 0)
-    SetPedHeadOverlayColor(ped, 4, 2, 0, 0)
-    SetPedHeadOverlayColor(ped, 5, 2, 0, 0)
-    SetPedHeadOverlayColor(ped, 8, 2, 0, 0)
-    SetPedHeadOverlayColor(ped, 10, 1, 0, 0)
-    SetPedHeadOverlay(ped, 1, 0, 0.0)
-    SetPedHairColor(ped, 1, 1)
+    if IsModelInCdimage(model) and IsModelValid(model) then
+        RequestModel(model)
+        while (not HasModelLoaded(model)) do
+            Citizen.Wait(0)
+        end
+        SetModelAsNoLongerNeeded(model)
+        if (model ~= `mp_f_freemode_01` and model ~= `mp_m_freemode_01`) then
+            -- SetPedRandomComponentVariation(ped, true)
+        else
+            SetPedHeadBlendData(ped, 0, 0, 0, 15, 0, 0, 0, 1.0, 0, false)
+            SetPedComponentVariation(ped, 11, 0, 11, 0)
+            SetPedComponentVariation(ped, 8, 0, 1, 0)
+            SetPedComponentVariation(ped, 6, 1, 2, 0)
+            SetPedHeadOverlayColor(ped, 1, 1, 0, 0)
+            SetPedHeadOverlayColor(ped, 2, 1, 0, 0)
+            SetPedHeadOverlayColor(ped, 4, 2, 0, 0)
+            SetPedHeadOverlayColor(ped, 5, 2, 0, 0)
+            SetPedHeadOverlayColor(ped, 8, 2, 0, 0)
+            SetPedHeadOverlayColor(ped, 10, 1, 0, 0)
+            SetPedHeadOverlay(ped, 1, 0, 0.0)
+            SetPedHairColor(ped, 1, 1)
+        end
+    end
 end
 
 function LoadPed(ped, data, model, gender)
@@ -26,21 +37,12 @@ function LoadPed(ped, data, model, gender)
         return
     end
     SetClothing(ped, data.drawables, data.props, data.drawtextures, data.proptextures)
-    Citizen.Wait(500)
     if (model == `mp_f_freemode_01` or model == `mp_m_freemode_01`) then
-        print ("here1")
         SetPedHeadBlend(ped, data.headBlend)
         SetHeadStructure(ped, data.headStructure)
         SetHeadOverlayData(ped, data.headOverlay)
         SetPedHairColor(ped, tonumber(data.hairColor[1]), tonumber(data.hairColor[2]))
-        if data.fadeStyle and data.fadeStyle > 0 and data.fadeStyle ~= 255 then
-          local fadeConfig = FADE_CONFIGURATIONS[model == `mp_m_freemode_01` and "male" or "female"][data.fadeStyle]
-          ClearPedFacialDecorations(ped)
-          Wait(1)
-          SetPedFacialDecoration(ped, fadeConfig[1], fadeConfig[2])
-        end
     else
-        print "here2"
         SetSkin(ped, model)
     end
     return

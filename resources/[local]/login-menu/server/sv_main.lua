@@ -94,6 +94,11 @@ function getUniquePhoneNumber()
     end
 end
 
+function GetCharacterSlots(source)
+    local slots = 2
+    return math.min(slots, 5)
+end
+
 RPC.register('login:createCharacter', function(source, pData)
     local data = exports['players']:getPlayerDataFromSource(source)
 
@@ -101,7 +106,15 @@ RPC.register('login:createCharacter', function(source, pData)
         return false
     end
 
-    local char = sql:executeSync('SELECT COUNT(*) as count FROM characters WHERE CONCAT(first_name, " ", last_name)=?', {pData.first_name.." "..pData.last_name})
+    --// CHECK IF SLOTS FULL
+    local count = sql:executeSync("SELECT COUNT(*) AS count FROM characters WHERE pid=?", {data.pid})
+    if not count or count[1].count >= GetCharacterSlots(source) then
+        TriggerClientEvent("DoLongHudText", source, "Sa ei saa teha rohkem karaktereid!", 'red')
+        return false
+    end
+
+    --// CHECK IF NAME TAKEN
+    local char = sql:executeSync('SELECT COUNT(*) as count FROM characters WHERE first_name=? AND last_name=?', {pData.first_name, pData.last_name})
     local existing = char and char[1].count > 0 or false
 
     if existing then
@@ -160,6 +173,12 @@ RPC.register('login:createCharacter', function(source, pData)
 
     local queryData = {info.insertId, 'Personal Account'}
     sql:executeSync(query, queryData)
+
+    --* ADD DEFAULT LICENSES
+    exports['jp-licenses']:addLicense(info.insertId, 1) --// DRIVER'S LICENSE
+    if (math.random(1, 4) == 1) then
+        exports['jp-licenses']:addLicense(info.insertId, 2) --// WEAPON'S LICENSE
+    end
 
     return true
 end)

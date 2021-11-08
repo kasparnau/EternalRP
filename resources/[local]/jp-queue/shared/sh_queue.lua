@@ -505,11 +505,11 @@ local function playerConnect(name, setKickReason, deferrals)
     local plrName = GetPlayerName(src)
     local sanName = string.gsub(plrName, "[^A-Za-z0-9 ]","")
 
-    if plrName ~= sanName then
-        done("Sinu nimi võib sisaldada ainult numbreid, tähti ja tühikuid!")
-        CancelEvent()
-        return
-    end
+    -- if plrName ~= sanName then
+    --     done("Sinu nimi võib sisaldada ainult numbreid, tähti ja tühikuid!")
+    --     CancelEvent()
+    --     return
+    -- end
 
     local allow
 

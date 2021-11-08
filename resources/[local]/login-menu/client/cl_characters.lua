@@ -1,8 +1,9 @@
 local pedSpawnLoc = {
-    [1] = vector4(1766.9494140625,-1658.6889892578,111.70324707031, 280.0),
-    [2] = vector4(1767.5845947266,-1657.6889892578,111.70324707031, 240.0),
-    [3] = vector4(1767.5845947266,-1656.6889892578,111.70324707031, 240.0),
-    [4] = vector4(1767.5845947266,-1655.6889892578,111.70324707031, 240.0),
+    [1] = vector4(1766.9494140625,-1658.6889892578,111.70324707031, 270.0),
+    [2] = vector4(1767.4845947266,-1657.7889892578,111.70324707031, 242.0),
+    [3] = vector4(1768.1845947266,-1656.8889892578,111.70324707031, 233.0),
+    [4] = vector4(1768.9845947266,-1655.9889892578,111.70324707031, 225.0),
+    [5] = vector4(1769.7845947266,-1655.1889892578,111.70324707031, 210.0),
 }
 
 currentPedChoices = {}
@@ -75,11 +76,22 @@ function RequestPedModel(model, callback)
     end)
 end
 
+function GetCharacterSlots()
+    local slots = 2
+    return math.min(slots, 5)
+end
+
 function CreatePlayerCharacterPeds(characters)
     ClearSpawnedPeds()
     CleanUpArea()
-    
+
+    local characterSlots = GetCharacterSlots()
+    local charactersBuilt = 0
+
     for _, char in pairs (characters) do
+        charactersBuilt = charactersBuilt + 1
+        if charactersBuilt > characterSlots then break end
+
         local cModel 
 
         if char.gender == 1 then
@@ -109,7 +121,7 @@ function CreatePlayerCharacterPeds(characters)
                     print("MODEL FAILED TO LOAD IN SPAWN: " .. modelHash)
                     goto skip_ped
                 end
-                -- SetEntityAlpha(newPed,204,false)
+
                 SetEntityAlpha(newPed, 204, false)
                 SetEntityHeading(newPed, pedSpawnLoc[_].w)
                 LoadPed(newPed, json.decode(char.outfit), modelHash, char.gender)

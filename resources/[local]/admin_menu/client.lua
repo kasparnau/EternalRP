@@ -1,12 +1,9 @@
 local playerPed = PlayerPedId()
 AddEventHandler("jp:onPedChange", function(ped)
     playerPed = ped
-    print ("New ped: "..ped)
 end)
 
 local adminRank = false
-
-print "heyyy"
 
 WarMenu.CreateMenu('admin', 'Admin')
 
