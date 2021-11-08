@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<SSetupData>
+  <deviceName>dlc_rmodmustang</deviceName>
+  <datFile>content.xml</datFile>
+  <timeStamp>17/02/2017 00:00:00</timeStamp>
+  <nameHash>rmodmustang</nameHash>
+  <contentChangeSetGroups>
+    <Item>
+      <NameHash>GROUP_STARTUP</NameHash>
+      <ContentChangeSets>
+        <Item>RMODMUSTANG_AUTOGEN</Item>
+		<Item platform="ps4|xboxone">RMODMUSTANG_PLATFORM_SPECS</Item>
+        <Item>RMODMUSTANG_UNLOCKS_AUTOGEN</Item>
+    <Item>
+      <NameHash>GROUP_ON_DEMAND</NameHash>
+      <ContentChangeSets>
+        <Item>RMODMUSTANG_ANIM_OVERLAYS</Item>
+      </ContentChangeSets>
+    </Item>	
+      </ContentChangeSets>
+    </Item>
+  </contentChangeSetGroups>
+  <type>EXTRACONTENT_COMPAT_PACK</type>
+  <order value="13" />  
+</SSetupData>
