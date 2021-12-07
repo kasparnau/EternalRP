@@ -1,7 +1,7 @@
 /cache/
 /db/
 node_modules/
-
+/resources/\[local\]/\[vehicles\]/jp-vehicles-stream
 /resources/\[local\]/jp_clothes/
 /resources/\[local\]/assets_peds/
 /resources/\[local\]/\[weapons\]/
