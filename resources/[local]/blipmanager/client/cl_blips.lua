@@ -19,9 +19,3 @@ AddEventHandler("players:playerSessionStarted", function()
         end
     end)
 end)
-
-Citizen.CreateThread(function()
-    for k,v in ipairs(blips) do
-        BlipManager:CreateBlip(v.id, v)
-    end
-end)

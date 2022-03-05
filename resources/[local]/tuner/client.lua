@@ -1246,6 +1246,7 @@ Citizen.CreateThread(function()
                                         if success then
                                             local success = RPC.execute('tuner:updateMods', 'Roof', i, vehicleMeta.vin)
                                             if success then  
+                                                print "wtf"
                                                 currentTunes = getCurrentTunes(GetVehiclePedIsIn(PlayerPedId(), false))
                                             end
                                         end

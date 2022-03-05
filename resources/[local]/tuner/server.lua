@@ -1,7 +1,7 @@
 local sql = exports['jp-sql2']
 
 local itemPrices = {
-    ['Spoilers'] = 500,
+    ['Spoiler'] = 500,
     ['FrontBumper'] = 500,
     ['RearBumper'] = 500,
     ['SideSkirt'] = 500,
@@ -10,15 +10,21 @@ local itemPrices = {
     ['Grille'] = 500,
     ['Hood'] = 500,
     ['Fender'] = 500,
+    ['RightFender'] = 500,
     ['Livery'] = 500,
-    ['PerleascentColour'] = 500,
+    ['Perleascent'] = 500,
     ['WheelColour'] = 500,
     ['PrimaryColour'] = 500,
     ['SecondaryColour'] = 500,
+    ['Roof'] = 500,
+    ['TrimB'] = 500,
+    ['ArchCover'] = 500,
+    ['Tank'] = 500,
 
     ['Xenon'] = 500,
     ['XenonColor'] = 1000,
     ['WindowTint'] = 500,
+    ['Extras'] = 0
 }
 
 
@@ -133,11 +139,9 @@ RPC.register("toggleExtra", function(pSource, ind, enabled, vin)
             
             local nmods = json.encode(mods)
             
-            print "yas"
             sql:executeSync("UPDATE vehicles SET mods=? WHERE vin=?", {nmods, vin})
             return true
         else
-            print "didt"
             return false
         end
     else
