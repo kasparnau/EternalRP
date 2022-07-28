@@ -8,3 +8,4 @@ node_modules/
 
 /resources/\[local\]/bills_old/
 /resources/\[local\]/bank_old/
+resources/\[local\]/doorlock/server/states.json

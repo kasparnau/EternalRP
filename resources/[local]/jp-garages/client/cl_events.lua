@@ -81,14 +81,14 @@ AddEventHandler("jp-garages:browseImpound", function(pEntity, pContext, pParams)
 
             MenuData[#MenuData+1] = {
                 title = localizedName,
-                desc = ("Plate: %s"):format(v.plate),
+                desc = ("Numbrimärk: %s"):format(v.plate),
                 children = {
                     {
-                        title = "Vehicle Status",
-                        desc = ("%s | Engine: %s%% | Body: %s%%"):format(status, engine, body)
+                        title = "Sõiduki Staatus",
+                        desc = ("%s | Mootor: %s%% | Kere: %s%%"):format(status, engine, body)
                     },
                     {
-                        title = ("Take Out Vehicle ($%s)"):format(500),
+                        title = ("VÕTA SÕIDUK VÄLJA ($%s)"):format(500),
                         event = "garages:cl_unimpoundVehicle",
                         params = json.encode(v)
                     },
